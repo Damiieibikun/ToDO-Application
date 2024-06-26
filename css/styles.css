@@ -1,0 +1,299 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.gap-20 {
+  gap: 20px;
+}
+
+.gap-30 {
+  gap: 30px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  border-radius: 3px;
+  height: 25px;
+}
+
+.right-format {
+  border: 0.8px solid rgba(128, 128, 128, 0.268);
+}
+
+.wrong-format {
+  border: 1px solid red;
+}
+
+form {
+  width: 250px;
+  padding: 20px;
+  box-shadow: 0px 2px 2px 2px rgba(128, 128, 128, 0.21);
+  border-radius: 3px;
+}
+
+form div {
+  width: 100%;
+}
+
+.error-msg {
+  color: red;
+  font-size: 12px;
+  margin: 0;
+  display: none;
+}
+
+.small-text {
+  font-size: 12px;
+}
+
+#todo-index {
+  height: 100vh;
+  position: relative;
+}
+
+#todoindex-text {
+  font-weight: 700;
+  font-size: 50px;
+}
+
+#landingpage {
+  height: 100vh;
+  text-align: center;
+  background-color: antiquewhite;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+}
+
+#signup-page {
+  height: 100vh;
+  background-color: white;
+  position: absolute;
+  width: 100%;
+}
+
+#login-page {
+  height: 100vh;
+  background-color: white;
+  position: absolute;
+  width: 100%;
+}
+
+/* homepage styles */
+
+.lg-txt {
+  font-family: "Playwrite MX", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+#todo-top {
+  justify-content: space-between;
+}
+
+#todo-list {
+  padding: 20px;
+  height: 100vh;
+}
+
+#todo-details {
+  grid-template-columns: 0.7fr 2fr;
+}
+#add-new-task {
+  display: none;
+}
+
+.todo-details-items {
+  height: 80vh;
+}
+
+#categories{
+  /* border-right: 1px solid gray; */
+  box-shadow: 2px 2px 2px 2px rgba(128, 128, 128, 0.146);
+  padding-top: 20px;
+}
+
+#category-list {
+  padding: 10px;
+  overflow-y: auto;
+  height: 50vh;
+  width: 200px;
+}
+
+#category-name {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.662);
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+#category-name-sm {
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.662);
+    font-weight: 300;
+    text-transform: capitalize;
+  }
+#todo-items {
+  padding: 10px;
+  flex-wrap: wrap;
+}
+.task-card{
+   min-width: 200px;
+    height: fit-content;
+    background-color: beige;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+    padding: 10px;
+}
+
+.task-title{
+    font-weight: 600;
+    font-size: 19px;
+    text-transform: capitalize;
+}
+
+.task-description{
+    font-weight: 300;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.done{
+    font-weight: 300;
+    color: gray;
+    font-size: 13px;
+}
+
+#done-tasks {
+  height: 20px;
+  width: 50px;
+}
+
+button {
+  background-color: rgb(223, 195, 162);
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  transition: 0.3s all;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgb(182, 159, 133);
+}
+#add-categories,
+#add-tasks {
+  display: none;
+  position: absolute;
+  z-index: 1;
+  padding-top: 80px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#add-categories-details, 
+#add-tasks-details  {
+  background-color: white;
+  width: 70%;
+  margin: auto;
+  padding: 30px;
+}
+
+#close, 
+#close-task {
+  align-self: end;
+  margin-bottom: 50px;
+}
+
+#close:hover,
+#close-task:hover {
+  cursor: pointer;
+}
+
+#task-form{
+  min-width: 400px;
+}
+
+.color-div {
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.color-div-sm {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }
+
+#chosen-colors {
+  flex-wrap: wrap;
+}
+
+#color-picker {
+  border: none;
+  border-radius: 5px;
+  width: 30px;
+}
+
+#availiable-categories{
+    flex-wrap: wrap;
+}
