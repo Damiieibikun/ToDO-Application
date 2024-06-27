@@ -26,7 +26,7 @@
       <div id="todo-top" class="flex align-center">
         <h1 class="lg-txt">todo</h1>
         <div class="flex align-center gap-10" id="add-new-task">
-          <button class="flex align-center gap-10">
+          <button class="flex align-center gap-10", style="font-weight: 600;">
             Create Task
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +46,7 @@
       </div>
 
       <div id="todo-details" class="grid">
-        <div class="todo-details-items flex-col align-center" id="categories">
+        <div class="todo-details-items flex-col" id="categories">
           <button class="flex align-center gap-10" id="open-cat">
             Create Category
             <svg
@@ -64,16 +64,25 @@
             </svg>
           </button>
 
-          <div id="category-list" class="mt-30 mb-30 flex-col gap-20">
-            <!-- <div class="chosen-color flex align-center gap-30">
-                <div class="color-div" style="background-color: beige;"></div>
-                <p id="category-name">Work</p>
-            </div> -->
+          
+          <div id="category-list" class="mt-30 mb-30 gap-10 align-center">
+            <div class="color-div" style="background-color: #9e86b6"></div>
+            <p id="category-name">Work</p>
+            <div class="color-div" style="background-color: #86b1b6"></div>
+            <p id="category-name">Study</p>
+            <div class="color-div" style="background-color: #e5bdc7"></div>
+            <p id="category-name">Entertainment</p>
+            <div class="color-div" style="background-color: #c3dfb3"></div>
+            <p id="category-name">Family</p>
           </div>
 
-          <div class="flex align-center">
+          <div class="flex align-center justify-center">
             <input type="checkbox" name="" id="done-tasks" />
             <span style="font-weight: 300">Hide done tasks</span>
+          </div>
+
+          <div class="flex align-center justify-center mt-30">
+            <img src="images/girl.jpg" alt="" width="60%">
           </div>
         </div>
 
@@ -166,15 +175,16 @@
             id="task-form"
             class="flex-col justify-center gap-20"
           >
-            <label for="task-title">Task Title</label>
+            <label for="task-title">Title</label>
             <input
               type="text"
               id="task-title"
               class="right-format"
+              placeholder="add a title..."
             />
             <div class="flex-col">
                 <label for="task-details">Description</label>
-                <textarea name="" id="task-details" cols="30" rows="10" class="right-format"></textarea>
+                <textarea name="" id="task-details" cols="30" rows="7" class="right-format" placeholder="add a description..."></textarea>
             </div>
 
             <div>

@@ -9,10 +9,10 @@ $('#category-form').on('submit', function(e){
                         <p id="category-name-sm">${category}</p>
                     </div>`)
 
-    $('#category-list').append(` <div class="chosen-color flex align-center gap-30">
+    $('#category-list').append(`
         <div class="color-div" style="background-color: ${color};"></div>
         <p id="category-name">${category}</p>
-    </div>`)
+    `)
 
     $('#add-new-task').css('display', 'flex')
 
