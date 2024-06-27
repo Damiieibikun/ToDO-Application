@@ -1,53 +1,59 @@
 $(document).ready(() => {
-
-$('#category-form').on('submit', function(e){
+  $("#category-form").on("submit", function (e) {
     e.preventDefault();
-    let category = $('#category-input').val();
-    let color = $('#color-picker').val();
-    $('#chosen-colors').append(` <div class="chosen-color flex-col align-center">
+    let category = $("#category-input").val();
+    let color = $("#color-picker").val();
+    $(
+      "#chosen-colors"
+    ).append(` <div class="chosen-color flex-col align-center">
                         <div class="color-div-sm" style="background-color: ${color};"></div>
                         <p id="category-name-sm">${category}</p>
-                    </div>`)
+                    </div>`);
 
-    $('#category-list').append(`
+    $("#category-list").append(`
         <div class="color-div" style="background-color: ${color};"></div>
         <p id="category-name">${category}</p>
-    `)
+    `);
 
-    $('#add-new-task').css('display', 'flex')
+    $("#add-new-task").css("display", "flex");
 
-    $('#availiable-categories').append(`<div class="chosen-color flex align-center gap-10">
+    $(
+      "#availiable-categories"
+    ).append(`<div class="chosen-color flex align-center gap-10">
         <div class="color-div-sm" style="background-color: ${color};"></div>
         <p id="category-name-sm">${category}</p>
-        <input type="checkbox" name="" id="selected-cat" />
-    </div>`)
+        <input type="checkbox" name="checkbox" class="selected-cat" />
+    </div>`);
 
-    $('#category-form')[0].reset()
-})
+    $("#category-form")[0].reset();
+  });
 
-$('#close').on('click', function(){
-    $('#add-categories').hide()
-})
+  $("#close").on("click", function () {
+    $("#add-categories").hide();
+  });
 
-$('#open-cat').click(function(){
-    $('#add-categories').show()
-})
+  $("#open-cat").click(function () {
+    $("#add-categories").show();
+  });
 
-$('#add-new-task').click(function(){
-    $('#add-tasks').show();
-})
+  $("#add-new-task").click(function () {
+    $("#add-tasks").show();
+  });
 
+  $("#task-form").on("submit", function (e) {
+    e.preventDefault();
 
-$('#task-form').on('submit', function(e){
-    e.preventDefault()
-    
-    let taskTitle = $('#task-title').val();
-    let taskDescription = $('#task-details').val();
-    $('#todo-items').append(`<div class="task-card">
+    let taskTitle = $("#task-title").val();
+    let taskDescription = $("#task-details").val();
+    $("#todo-items").append(`<div class="task-card">
                 <div style="text-align: end;" class="dropdown-edit-delete">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
-                      </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots dropdown-edit-delete-icon" viewBox="0 0 16 16">
+  <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+</svg>
+<div class="dropdown-edit-delete-list">
+                        <div class="edit">Edit..</div>
+                        <div class="delete">Delete..</div>
+                      </div>
                 </div>
                 <p class="task-title">${taskTitle}</p>
                 <p class="task-description">${taskDescription}</p>
@@ -56,14 +62,63 @@ $('#task-form').on('submit', function(e){
                 </div>
                 
             </div>
-        `)
+        `);
 
-        $('#task-form')[0].reset()
-})
+    $("#task-form")[0].reset();
+    $("#add-tasks").hide();
+  });
 
-$('#close-task').on('click', function(){
-    $('#add-tasks').hide()
-})
+  $("#close-task").on("click", function () {
+    $("#add-tasks").hide();
+  });
 
+  // edit and delete toggle buttons
 
-})
+//   $(document).on('click', '.dropdown-edit-delete-icon', function(){
+//     $(this).closest('.dropdown-edit-delete').find('.dropdown-edit-delete-list').toggle();
+// });
+
+$(document).on('click', '.dropdown-edit-delete-icon', function(){
+    $(this).next().toggle();
+});
+
+  // striking through finished tasks
+  $(document).on("click", ".check-task", function () {
+    if (this.checked) {
+      $(this)
+        .closest(".task-card")
+        .find(".task-title")
+        .css("text-decoration", "line-through");
+      $(this)
+        .closest(".task-card")
+        .find(".task-description")
+        .css("text-decoration", "line-through");
+    } else {
+      $(this)
+        .closest(".task-card")
+        .find(".task-title")
+        .css("text-decoration", "none");
+      $(this)
+        .closest(".task-card")
+        .find(".task-description")
+        .css("text-decoration", "none");
+    }
+  });
+
+  // hide all done tasks
+  // api might do this job
+
+  $(document).on("click", "#done-tasks", function () {
+    if (this.checked) {
+      for (var i of $(".task-card").find(".check-task")) {
+        if (i.checked) {
+          $(i).closest(".task-card").css("display", "none");
+        }
+      }
+    } else {
+      for (var i of $(".task-card").find(".check-task")) {
+        $(i).closest(".task-card").css("display", "grid");
+      }
+    }
+  });
+});
