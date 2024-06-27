@@ -1,4 +1,6 @@
 $(document).ready(() => {
+
+    // creating new category
   $("#category-form").on("submit", function (e) {
     e.preventDefault();
     let category = $("#category-input").val();
@@ -26,8 +28,14 @@ $(document).ready(() => {
     </div>`);
 
     $("#category-form")[0].reset();
+
+    // send info to api?
   });
 
+  // filtering through categories may need api
+
+
+//open and close new categories and new tasks
   $("#close").on("click", function () {
     $("#add-categories").hide();
   });
@@ -40,6 +48,12 @@ $(document).ready(() => {
     $("#add-tasks").show();
   });
 
+  $("#close-task").on("click", function () {
+    $("#add-tasks").hide();
+  });
+
+
+  // adding new todo sticky notes
   $("#task-form").on("submit", function (e) {
     e.preventDefault();
 
@@ -66,21 +80,31 @@ $(document).ready(() => {
 
     $("#task-form")[0].reset();
     $("#add-tasks").hide();
+
+    // send info to api?
   });
 
-  $("#close-task").on("click", function () {
-    $("#add-tasks").hide();
-  });
 
   // edit and delete toggle buttons
-
-//   $(document).on('click', '.dropdown-edit-delete-icon', function(){
-//     $(this).closest('.dropdown-edit-delete').find('.dropdown-edit-delete-list').toggle();
-// });
 
 $(document).on('click', '.dropdown-edit-delete-icon', function(){
     $(this).next().toggle();
 });
+
+
+// delete item maybe a post request to remove item
+
+// edit item maybe a post request to update item
+// testing for editing
+
+$(document).on('click', '.edit', function(){
+    $(this).parent().hide()
+    $("#add-tasks").show();
+    $("#task-title").val($(this).parents('.dropdown-edit-delete').next().text())
+    $("#task-details").val($(this).parents('.dropdown-edit-delete').next().next().text())
+})
+///
+
 
   // striking through finished tasks
   $(document).on("click", ".check-task", function () {

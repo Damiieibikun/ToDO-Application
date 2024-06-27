@@ -93,7 +93,8 @@ $(document).ready(() => {
         }
     }
 
-    function validateAll() {
+    function validateAll(e) {
+        e.preventDefault()
 
         let numEmptyFields = 0
         let inputArray = document.getElementById('registration-form').getElementsByTagName('input')
@@ -117,7 +118,7 @@ $(document).ready(() => {
         console.log(numEmptyFields)
         console.log('final result is: ' + result())
         if (result()) {
-            $('#signup-page').html(`<h1>Success</h1>`)
+            $('#signup-page').html(`<h1 class ='success'>Successful</h1>`)
             setTimeout(()=>{
                 $('#signup-page').slideUp(function() {
                     $('#login-page').css('z-index', 1);
@@ -130,7 +131,8 @@ $(document).ready(() => {
     }
 
 
-    function validateLogin(){
+    function validateLogin(e){
+        e.preventDefault()
         let numEmptyFields = 0
         let loginInputArray = document.getElementById('login-form').getElementsByTagName('input')
         for (var i of loginInputArray) {
@@ -146,16 +148,24 @@ $(document).ready(() => {
         if (numEmptyFields === 0) {
             emptyInput = true;
             $('#empty-field-login').hide();
+             //get items from api and validate
+        let validatedCredentials = true // change this later
+        if (validatedCredentials){
+            $('#login-page').html(`<h1 class='success'>Welcome ${$('#login-username').val()}</h1>`)
+            setTimeout(()=>{
+               window.location.href = 'home.html'
+            }, 1000);             
+            
+        } else {
+            console.log('something went wrong')
+        } 
 
         } else {
             $('#empty-field-login').show();
         }
 
-        //get items from api and validate
-        let validatedCredentials = true // change this later
-        if (validatedCredentials){
-            window.location.href = 'home.html'
-        }
+                
+        
     }
 
     $('#name').on('change', validateEmpty)
@@ -163,10 +173,10 @@ $(document).ready(() => {
     $('#email').on('change', validateEmail)
     $('#password').on('input', validatePassword)
     $('#confirm-password').on('change', confirmPassword)
-    $('#register').on('click', validateAll)
+    $('#registration-form').on('submit', validateAll)
 
 
-    $('#login-btn').on('click', validateLogin)
+    $('#login-form').on('submit', validateLogin)
     $('#login-username').on('change', validateEmpty)
     $('#login-password').on('change', validateEmpty)
 

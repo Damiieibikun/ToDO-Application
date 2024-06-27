@@ -56,9 +56,8 @@ input[type="text"] {
   width: 70%;
   padding: 10px;
   height: 25px;
-  background-color: #8080800d;
   border-radius: 5px;
-  border: none;
+  
 }
 textarea{
   padding: 10px;
@@ -69,11 +68,12 @@ textarea::placeholder {
 }
 
 .right-format {
-  border: 0.8px solid rgba(128, 128, 128, 0.268);
+  background-color: #8080800d;
+  border: none;
 }
 
 .wrong-format {
-  border: 1px solid red;
+  box-shadow: 0px 2px 2px 2px #ff94004a;
 }
 
 #registration-form,
@@ -89,7 +89,7 @@ form div {
 }
 
 .error-msg {
-  color: red;
+  color: #ff8d00;
   font-size: 12px;
   margin: 0;
   display: none;
@@ -133,7 +133,8 @@ form div {
 
 /* homepage styles */
 
-.lg-txt {
+.lg-txt, 
+.success {
   font-family: "Playwrite MX", cursive;
   font-optical-sizing: auto;
   font-weight: 700;
@@ -315,23 +316,29 @@ label{
   min-width: 100%;
 }
 
-.color-div {
-  height: 40px;
-  width: 40px;
+.color-div,
+.color-div-md,
+.color-div-sm {
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+
+.color-div {
+  height: 40px;
+  width: 40px;
+  
+}
 .color-div-sm {
     height: 20px;
     width: 20px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    -ms-border-radius: 50%;
-    -o-border-radius: 50%;
+  }
+
+  .color-div-md {
+    height: 30px;
+    width: 30px;
   }
 
 #chosen-colors {
