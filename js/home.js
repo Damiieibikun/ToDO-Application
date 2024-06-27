@@ -3,7 +3,15 @@ $(document).ready(() => {
     // creating new category
   $("#category-form").on("submit", function (e) {
     e.preventDefault();
-    let category = $("#category-input").val();
+
+    if($("#category-input").val() === ''){
+    $('#cat-error').css('display', 'block')
+    $("#category-input").addClass('wrong-format')
+    }
+    else{
+        $('#cat-error').css('display', 'none')
+        $("#category-input").removeClass('wrong-format')
+        let category = $("#category-input").val();
     let color = $("#color-picker").val();
     $(
       "#chosen-colors"
@@ -30,6 +38,8 @@ $(document).ready(() => {
     $("#category-form")[0].reset();
 
     // send info to api?
+    }
+    
   });
 
   // filtering through categories may need api
@@ -57,6 +67,24 @@ $(document).ready(() => {
   $("#task-form").on("submit", function (e) {
     e.preventDefault();
 
+    
+if($("#task-title").val() === ''){
+    $("#task-title").addClass('wrong-format')
+    $('#add-task-error').text('Enter a title')
+    $('#add-task-error').css('display', 'block')
+}
+else if($("#task-details").val() === ''){
+    $("#task-details").addClass('wrong-format')
+    $("#task-title").removeClass('wrong-format')
+    $('#add-task-error').text('Enter a Description')
+    $('#add-task-error').css('display', 'block')
+}
+
+else 
+{ 
+    $("#task-title").removeClass('wrong-format')
+    $("#task-details").removeClass('wrong-format')
+
     let taskTitle = $("#task-title").val();
     let taskDescription = $("#task-details").val();
     $("#todo-items").append(`<div class="task-card">
@@ -80,8 +108,9 @@ $(document).ready(() => {
 
     $("#task-form")[0].reset();
     $("#add-tasks").hide();
-
     // send info to api?
+
+}    
   });
 
 
