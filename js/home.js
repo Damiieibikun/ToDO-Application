@@ -1,6 +1,6 @@
 $(document).ready(() => {
-    // get request
-  //populate page with categories already created 
+  // get request
+  //populate page with categories already created
 
   let todoCategories =
     JSON.parse(localStorage.getItem("todo-categories")) || [];
@@ -19,8 +19,8 @@ $(document).ready(() => {
   `);
 
     // get request
-  // add availiable categories to task form
-  $("#availiable-categories")
+    // add availiable categories to task form
+    $("#availiable-categories")
       .append(`<div class="chosen-color flex align-center gap-10">
 <div class="color-div-sm" style="background-color: ${element.color};"></div>
 <p id="category-name-sm">${element.category}</p>
@@ -32,6 +32,10 @@ $(document).ready(() => {
   //populate page with tasks already created
   let todoTasks = JSON.parse(localStorage.getItem("todo-tasks")) || [];
   todoTasks.forEach((element, i) => {
+    let checkedValue = null;
+    if (element.done) {
+      checkedValue = "checked";
+    }
     // create a new card
     let newCard = $(`<div class="task-card" data-id = ${i}>
             <div style="text-align: end;" class="dropdown-edit-delete">
@@ -46,7 +50,7 @@ $(document).ready(() => {
             <p class="task-title">${element.title}</p>
             <p class="task-description">${element.description}</p>
             <div style="text-align: end;">
-                <input type="checkbox" name="" class="check-task"> <span class="done">Done</span>
+                <input type="checkbox" name="" class="check-task" ${checkedValue}> <span class="done">Done</span>
             </div>
             <div class="flex gap-10 color-list-chosen">
                 </div>
@@ -74,11 +78,9 @@ $(document).ready(() => {
       $("#cat-error").css("display", "none");
       $("#category-input").removeClass("wrong-format");
 
-  // make get request
+      // make get request
       let category = $("#category-input").val();
       let color = $("#color-picker").val();
-
-    
 
       //  populate categories list
 
@@ -95,9 +97,8 @@ $(document).ready(() => {
 
       $("#add-new-task").css("display", "flex");
 
-              $(
-                  "#availiable-categories"
-              ).append(`<div class="chosen-color flex align-center gap-10">
+      $("#availiable-categories")
+        .append(`<div class="chosen-color flex align-center gap-10">
           <div class="color-div-sm" style="background-color: ${color};"></div>
           <p id="category-name-sm">${category}</p>
           <input type="checkbox" name="checkbox" class="selected-cat" />
@@ -105,12 +106,11 @@ $(document).ready(() => {
 
       $("#category-form")[0].reset();
 
-
-        // make post request to api?
-        todoCategories.push({
-          category: category,
-          color: color,
-        });
+      // make post request to api?
+      todoCategories.push({
+        category: category,
+        color: color,
+      });
       // add to local storage/ make post request
       localStorage.setItem("todo-categories", JSON.stringify(todoCategories));
     }
@@ -123,19 +123,15 @@ $(document).ready(() => {
   // filtering through categories may need api
 
   $(document).on("click", ".color-div", function () {
+    let color = $(this).css("background-color");
 
-    let color = $(this).css('background-color')
-    
     //get request
-    let displayedTask = JSON.parse(localStorage.getItem('todo-tasks')) || []
-      displayedTask.forEach((element, i)=>{
-      if(element.colors.includes(color) === false){
 
-              $(`[data-id=${i}]`).toggle()
+    todoTasks.forEach((element, i) => {
+      if (element.colors.includes(color) === false) {
+        $(`[data-id=${i}]`).toggle();
       }
-    
-    })
-  
+    });
   });
 
   //open and close new categories and new tasks
@@ -155,7 +151,6 @@ $(document).ready(() => {
   $("#task-form").on("submit", function (e) {
     // e.preventDefault();
 
-
     if ($("#task-title").val() === "") {
       $("#task-title").addClass("wrong-format");
       $("#add-task-error").text("Enter a title");
@@ -171,8 +166,6 @@ $(document).ready(() => {
       $("#task-title").removeClass("wrong-format");
       $("#task-details").removeClass("wrong-format");
 
-
-    
       let taskTitle = $("#task-title").val();
       let taskDescription = $("#task-details").val();
 
@@ -211,41 +204,35 @@ $(document).ready(() => {
         }
       }
 
-
       $("#task-form")[0].reset();
       $("#add-tasks").hide();
 
       // send info to api?
       todoTasks.push({
-
         title: taskTitle,
         description: taskDescription,
         colors: chosenColorsTask,
+        done: false,
       });
       // add to local storage//post to api
       localStorage.setItem("todo-tasks", JSON.stringify(todoTasks));
     }
   });
 
-
   // edit and delete toggle buttons
   $(document).on("click", ".dropdown-edit-delete-icon", function () {
     $(this).next().toggle();
   });
 
-
-  ////////////////////////////////////////////////////////////////////////
   // delete item maybe a post request to remove item
   $(document).on("click", ".delete", function () {
     $(this).parent().parent().parent().hide();
-   let id = $(this).parent().parent().parent().data('id')
-   //make an api request here to remove item
-   todoTasks.splice(id, 1)
-   localStorage.setItem("todo-tasks", JSON.stringify(todoTasks));
-   location.reload(true)
-  })
-////////////////////////////////////////////////////////////////////////////////////
-
+    let id = $(this).parent().parent().parent().data("id");
+    //make an api request here to remove item
+    todoTasks.splice(id, 1);
+    localStorage.setItem("todo-tasks", JSON.stringify(todoTasks));
+    location.reload(true);
+  });
 
   // edit item maybe a post request to update item
   $(document).on("click", ".edit", function () {
@@ -264,6 +251,7 @@ $(document).ready(() => {
 
   // striking through finished tasks
   $(document).on("click", ".check-task", function () {
+    let id = $(this).closest(".task-card").data("id");
     if (this.checked) {
       $(this)
         .closest(".task-card")
@@ -273,6 +261,12 @@ $(document).ready(() => {
         .closest(".task-card")
         .find(".task-description")
         .css("text-decoration", "line-through");
+      todoTasks.forEach((element, i) => {
+        if (i == id) {
+          element.done = true;
+          localStorage.setItem("todo-tasks", JSON.stringify(todoTasks));
+        }
+      });
     } else {
       $(this)
         .closest(".task-card")
@@ -282,9 +276,36 @@ $(document).ready(() => {
         .closest(".task-card")
         .find(".task-description")
         .css("text-decoration", "none");
+      todoTasks.forEach((element, i) => {
+        if (i == id) {
+          element.done = false;
+          localStorage.setItem("todo-tasks", JSON.stringify(todoTasks));
+        }
+      });
     }
   });
 
+  for (var i of $(".check-task")) {
+    if (i.checked) {
+      $(i)
+        .closest(".task-card")
+        .find(".task-title")
+        .css("text-decoration", "line-through");
+      $(i)
+        .closest(".task-card")
+        .find(".task-description")
+        .css("text-decoration", "line-through");
+    } else {
+      $(i)
+        .closest(".task-card")
+        .find(".task-title")
+        .css("text-decoration", "none");
+      $(i)
+        .closest(".task-card")
+        .find(".task-description")
+        .css("text-decoration", "none");
+    }
+  }
   // hide all done tasks
   // api might do this job
 
