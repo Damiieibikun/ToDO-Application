@@ -178,6 +178,7 @@ form div {
   width: 185px;
   display: grid;
   grid-template-columns: 1fr 1fr;
+
   /* grid-template-rows: 1fr 1fr; */
   grid-template-rows: auto;
   align-self: center;
@@ -206,13 +207,13 @@ form div {
   }
 #todo-items {
   padding: 0 30px;
-  /* flex-wrap: wrap; */
-  display: grid;
+  flex-wrap: wrap;
+  /* display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto;
+  grid-template-rows: auto; */
 }
 .task-card{
-   min-width: 200px;
+   width: 400px;
     height: fit-content;
     background-color: #fcf2c3;
     border-radius: 7px;
