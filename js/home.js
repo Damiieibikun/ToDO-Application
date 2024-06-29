@@ -22,9 +22,8 @@ $(document).ready(() => {
     // add availiable categories to task form
     $("#availiable-categories")
       .append(`<div class="chosen-color flex align-center gap-10">
-<div class="color-div-sm" style="background-color: ${element.color};"></div>
+<div class="color-div-md" style="background-color: ${element.color};"></div>
 <p class="category-name-sm">${element.category}</p>
-<input type="checkbox" name="checkbox" class="selected-cat" />
 </div>`);
   });
 
@@ -86,7 +85,7 @@ $(document).ready(() => {
 
       $("#chosen-colors")
         .append(` <div class="chosen-color flex-col align-center">
-                      <div class="color-div-sm" style="background-color: ${color};"></div>
+                      <div class="color-div-md" style="background-color: ${color};"></div>
                       <p class="category-name-sm">${category}</p>
                   </div>`);
 
@@ -99,7 +98,7 @@ $(document).ready(() => {
 
       $("#availiable-categories")
         .append(`<div class="chosen-color flex align-center gap-10">
-          <div class="color-div-sm" style="background-color: ${color};"></div>
+          <div class="color-div-md" style="background-color: ${color};"></div>
           <p class="category-name-sm">${category}</p>
           <input type="checkbox" name="checkbox" class="selected-cat" />
       </div>`);
@@ -118,12 +117,16 @@ $(document).ready(() => {
 
   $("#add-new-task").click(function () {
     $("#add-tasks").show();
+    $("#task-title").removeClass("wrong-format");
+    $("#task-details").removeClass("wrong-format");
+    $("#add-task-error").css("display", "none");
+    $(".chosen-color").removeClass("chosen-tag");
   });
 
   // filtering through categories may need api
 
   $(document).on("click", ".color-div", function () {
-    $(this).next().toggleClass('font-weight')
+    $(this).next().toggleClass("font-weight");
     let color = $(this).css("background-color");
 
     //get request
@@ -132,7 +135,7 @@ $(document).ready(() => {
         $(`[data-id=${i}]`).toggle();
       }
     });
- $(this).next().siblings().toggleClass('opacity')
+    $(this).next().siblings().toggleClass("opacity");
   });
 
   //open and close new categories and new tasks
@@ -142,6 +145,8 @@ $(document).ready(() => {
 
   $("#open-cat").click(function () {
     $("#add-categories").show();
+    $("#cat-error").css("display", "none");
+    $("#category-input").removeClass("wrong-format");
   });
 
   $("#close-task").on("click", function () {
@@ -194,16 +199,16 @@ $(document).ready(() => {
       // make get request here
       $("#todo-items").append(newCard);
       let chosenColorsTask = [];
-      for (var i of $("#task-form").find(".selected-cat")) {
-        if (i.checked) {
-          let colors =
-            i.previousSibling.previousSibling.previousSibling.previousSibling
-              .style.backgroundColor;
+
+      $("#task-form")
+        .find(".chosen-tag")
+        .find(".color-div-md")
+        .each((index, element) => {
+          let catColor = $(element).css("background-color");
+          chosenColorsTask.push(catColor);
           newCard.find(".color-list-chosen").append(`
-                      <div class="color-div-md" style="background-color: ${colors}"></div>`);
-          chosenColorsTask.push(colors);
-        }
-      }
+                      <div class="color-div-md" style="background-color: ${catColor}"></div>`);
+        });
 
       $("#task-form")[0].reset();
       $("#add-tasks").hide();
@@ -218,6 +223,12 @@ $(document).ready(() => {
       // add to local storage//post to api
       localStorage.setItem("todo-tasks", JSON.stringify(todoTasks));
     }
+  });
+
+  // let chosenColorsTask = [];
+
+  $(document).on("click", ".chosen-color", function () {
+    $(this).addClass("chosen-tag");
   });
 
   // edit and delete toggle buttons
@@ -323,4 +334,8 @@ $(document).ready(() => {
       }
     }
   });
+});
+
+$("#logout-btn").click(() => {
+  window.location.href = "index.html";
 });
