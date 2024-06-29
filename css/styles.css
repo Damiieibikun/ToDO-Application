@@ -184,18 +184,25 @@ form div {
   align-self: center;
 }
 
-#category-name {
+.opacity{
+  opacity: 0.5;
+}
+
+.font-weight{
+  font-weight: 700;
+}
+
+.category-name {
   font-size: 17px;
   color: rgba(0, 0, 0, 0.662);
-  font-weight: 400;
   text-transform: capitalize;
 
 }
 
-#category-name-sm {
-    font-size: 13px;
+.category-name-sm {
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.662);
-    font-weight: 300;
+    font-weight: 500;
     text-transform: capitalize;
   }
 
@@ -232,7 +239,7 @@ form div {
 }
 
 .task-description{
-    font-weight: 300;
+    font-weight: 400;
     font-size: 14px;
     text-transform: capitalize;
 }
@@ -272,7 +279,6 @@ label{
   display: none;
   position: absolute;
   z-index: 1;
-
   padding-top: 5%;
   left: 0;
   top: 0;
@@ -284,10 +290,12 @@ label{
 
 #add-categories-details{
   width: 40%;
+ 
 }
 
 #add-tasks-details {
-  width: 45%;
+
+  width: fit-content;
 }
 
 #add-categories-details, 
@@ -339,8 +347,8 @@ label{
   cursor: pointer;
 }
 .color-div-sm {
-    height: 20px;
-    width: 20px;
+    height: 35px;
+    width: 35px;
   }
 
   .color-div-md {
@@ -351,6 +359,9 @@ label{
 #chosen-colors {
   flex-wrap: wrap;
 }
+.chosen-color{
+  width: fit-content;
+}
 
 #color-picker {
   border: none;
@@ -359,7 +370,8 @@ label{
 }
 
 #availiable-categories{
-    flex-wrap: wrap;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
 }
 
 .dropdown-edit-delete-icon:hover{
@@ -395,3 +407,8 @@ color: gray;
 }
 
 
+
+.selected-cat{
+  width: 20px;
+  height: 20px;
+}

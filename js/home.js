@@ -15,7 +15,7 @@ $(document).ready(() => {
      
       <div class="color-div" style="background-color: ${element.color};"></div>
    
-      <p id="category-name">${element.category}</p>
+      <p class="category-name">${element.category}</p>
   `);
 
     // get request
@@ -23,7 +23,7 @@ $(document).ready(() => {
     $("#availiable-categories")
       .append(`<div class="chosen-color flex align-center gap-10">
 <div class="color-div-sm" style="background-color: ${element.color};"></div>
-<p id="category-name-sm">${element.category}</p>
+<p class="category-name-sm">${element.category}</p>
 <input type="checkbox" name="checkbox" class="selected-cat" />
 </div>`);
   });
@@ -87,12 +87,12 @@ $(document).ready(() => {
       $("#chosen-colors")
         .append(` <div class="chosen-color flex-col align-center">
                       <div class="color-div-sm" style="background-color: ${color};"></div>
-                      <p id="category-name-sm">${category}</p>
+                      <p class="category-name-sm">${category}</p>
                   </div>`);
 
       $("#category-list").append(`
       <div class="color-div" style="background-color: ${color};"></div>
-      <p id="category-name">${category}</p>
+      <p class="category-name">${category}</p>
   `);
 
       $("#add-new-task").css("display", "flex");
@@ -100,7 +100,7 @@ $(document).ready(() => {
       $("#availiable-categories")
         .append(`<div class="chosen-color flex align-center gap-10">
           <div class="color-div-sm" style="background-color: ${color};"></div>
-          <p id="category-name-sm">${category}</p>
+          <p class="category-name-sm">${category}</p>
           <input type="checkbox" name="checkbox" class="selected-cat" />
       </div>`);
 
@@ -123,15 +123,16 @@ $(document).ready(() => {
   // filtering through categories may need api
 
   $(document).on("click", ".color-div", function () {
+    $(this).next().toggleClass('font-weight')
     let color = $(this).css("background-color");
 
     //get request
-
     todoTasks.forEach((element, i) => {
       if (element.colors.includes(color) === false) {
         $(`[data-id=${i}]`).toggle();
       }
     });
+ $(this).next().siblings().toggleClass('opacity')
   });
 
   //open and close new categories and new tasks
