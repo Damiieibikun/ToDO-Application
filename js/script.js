@@ -40,7 +40,7 @@ $(document).ready(() => {
 
   function validatePassword() {
     let passwordValidated = false;
-    const passwordRegex = /^[a-zA-Z0-9]{8}$/;
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
     if ($("#password").val() !== "") {
       passwordRegex.test($("#password").val())
         ? ($("#password").removeClass("wrong-format"),
@@ -95,6 +95,7 @@ $(document).ready(() => {
       emptyInput = true;
       $("#empty-field").hide();
     } else {
+      emptyInput = false;
       $("#empty-field").show();
     }
 
@@ -115,22 +116,23 @@ $(document).ready(() => {
         userName: $("#username").val(),
         password: $("#password").val(),
         todoInfo: {
-          categories:[],
-          todoTasks:[]
-        }
+          categories: [],
+          todoTasks: [],
+        },
       });
 
       localStorage.setItem("todo-users", JSON.stringify(users));
-      
 
-      $("#signup-page").html(`<h1 class ='success'>Successful</h1>`);
+      $("#signup-page").html(
+        `<h1 class ='success' style="text-align: center;">Successful</h1>`
+      );
       setTimeout(() => {
         $("#signup-page").slideUp(function () {
           $("#login-page").css("z-index", 1);
         });
       }, 1000);
     } else {
-      console.log("something went wrong");
+      console.log("Failed Registeration");
     }
   }
 
@@ -166,14 +168,14 @@ $(document).ready(() => {
         ) {
           validatedCredentials = true;
           $("#login-page").html(
-            `<h1 class='success'>Welcome ${element.fullName}</h1>`
+            `<h1 class='success' style="text-align: center;">Welcome ${element.fullName}</h1>`
           );
           localStorage.setItem("current-user", element.fullName);
           setTimeout(() => {
             window.location.href = "home.html";
           }, 1000);
         } else {
-          console.log("something went wrong");
+          console.log("Failed Authentication");
           $("#empty-field-login").show();
           $("#empty-field-login").text("Invalid username or password");
         }
@@ -186,8 +188,8 @@ $(document).ready(() => {
   $("#name").on("change", validateEmpty);
   $("#username").on("change", validateEmpty);
   $("#email").on("change", validateEmail);
-  $("#password").on("input", validatePassword);
-  $("#confirm-password").on("change", confirmPassword);
+  $("#password").on("change", validatePassword);
+  $("#confirm-password").on("input", confirmPassword);
   $("#registration-form").on("submit", validateAll);
 
   $("#login-form").on("submit", validateLogin);

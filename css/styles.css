@@ -13,6 +13,42 @@ body {
   font-style: normal;
 }
 
+form div {
+  width: 100%;
+}
+
+input[type="text"] {
+  width: 70%;
+  padding: 10px;
+  height: 25px;
+  border-radius: 5px;
+}
+textarea {
+  padding: 10px;
+}
+
+textarea::placeholder {
+  font-family: "Roboto", sans-serif;
+}
+
+button {
+  background-color: rgb(77, 76, 76);
+  color: #ffffff;
+  border-radius: 5px;
+  border: none;
+  padding: 10px;
+  transition: 0.3s all;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: rgb(182, 159, 133);
+}
+
+label {
+  font-weight: bold;
+  color: rgb(25, 25, 25);
+}
 .flex {
   display: flex;
 }
@@ -51,21 +87,6 @@ body {
 .mb-30 {
   margin-bottom: 30px;
 }
-
-input[type="text"] {
-  width: 70%;
-  padding: 10px;
-  height: 25px;
-  border-radius: 5px;
-}
-textarea {
-  padding: 10px;
-}
-
-textarea::placeholder {
-  font-family: "Roboto", sans-serif;
-}
-
 .right-format {
   background-color: #8080800d;
   border: none;
@@ -75,27 +96,72 @@ textarea::placeholder {
   box-shadow: 0px 2px 2px 2px #ff94004a;
 }
 
+#landingpage {
+  height: 100vh;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  background: rgb(182, 159, 133);
+  background: linear-gradient(
+    45deg,
+    rgba(182, 159, 133, 1) 0%,
+    rgba(250, 235, 215, 1) 35%,
+    rgba(255, 255, 255, 1) 100%
+  );
+}
+
+#signup,
+#login {
+  width: 100px;
+}
+
 #registration-form,
 #login-form {
   width: 250px;
   padding: 20px;
   box-shadow: 0px 2px 2px 2px rgba(128, 128, 128, 0.21);
   border-radius: 3px;
+  background-color: white;
 }
 
-form div {
+#signup-page,
+#login-page {
+  height: 100vh;
+  position: absolute;
   width: 100%;
+  background: rgb(246, 238, 228);
+  background: linear-gradient(
+    45deg,
+    rgba(246, 238, 228, 1) 0%,
+    rgba(251, 249, 247, 1) 35%,
+    rgba(255, 255, 255, 1) 100%
+  );
 }
 
 .error-msg {
   color: #ff8d00;
   font-size: 12px;
-  margin: 0;
+  margin: 0 0 9px 0;
   display: none;
 }
 
 .small-text {
   font-size: 12px;
+}
+
+/* homepage styles */
+#greeting-msg {
+  text-transform: capitalize;
+}
+.lg-txt,
+.success {
+  font-family: "Playwrite MX", cursive;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 40px;
+  /* margin: 0; */
 }
 
 #todo-index {
@@ -107,42 +173,6 @@ form div {
   font-size: 50px;
 }
 
-#landingpage {
-  height: 100vh;
-  text-align: center;
-  background-color: antiquewhite;
-  position: absolute;
-  width: 100%;
-  z-index: 2;
-}
-
-#signup-page {
-  height: 100vh;
-  background-color: white;
-  position: absolute;
-  width: 100%;
-}
-
-#login-page {
-  height: 100vh;
-  background-color: white;
-  position: absolute;
-  width: 100%;
-}
-
-/* homepage styles */
-#greeting-msg{
-  text-transform: capitalize;
-}
-.lg-txt,
-.success {
-  font-family: "Playwrite MX", cursive;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
-  font-size: 40px;
-  margin: 0;
-}
 #todo-top {
   justify-content: space-between;
   margin: 0 20px;
@@ -185,6 +215,9 @@ form div {
 .font-weight {
   font-weight: 700;
 }
+.display-none {
+  display: none;
+}
 
 .category-name {
   font-size: 17px;
@@ -199,6 +232,10 @@ form div {
   text-transform: capitalize;
 }
 
+#todo-img {
+  width: 60%;
+}
+
 #open-cat {
   margin-top: 20px;
   align-self: end;
@@ -211,69 +248,12 @@ form div {
   height: 85vh;
   overflow-y: scroll;
 }
-.task-card {
-  width: 400px;
-  height: fit-content;
-  background-color: #fcf2c3;
-  border-radius: 7px;
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  -ms-border-radius: 7px;
-  -o-border-radius: 7px;
-  padding: 10px;
-  color: #000000c2;
-}
 
-.task-title {
-  font-weight: 600;
-  font-size: 19px;
-  text-transform: capitalize;
-}
-
-.task-description {
-  font-weight: 400;
-  font-size: 14px;
-  text-transform: capitalize;
-}
-
-.strike-through{
-  text-decoration: line-through;
-}
-.done {
-  font-weight: 300;
-  color: gray;
-  font-size: 13px;
-}
-
-#done-tasks {
-  height: 20px;
-  width: 50px;
-}
-
-button {
-  background-color: rgb(77, 76, 76);
-  color: #ffffff;
-  border-radius: 5px;
-  border: none;
-  padding: 10px;
-  transition: 0.3s all;
-}
-
-button:hover {
-  cursor: pointer;
-  background-color: rgb(182, 159, 133);
-}
-
-label {
-  font-weight: bold;
-  color: rgb(25, 25, 25);
-}
 #add-categories,
 #add-tasks {
   display: none;
-  position: absolute;
+  position: fixed;
   z-index: 1;
-  padding-top: 5%;
   left: 0;
   top: 0;
   width: 100%;
@@ -300,6 +280,50 @@ label {
   -moz-border-radius: 20px;
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
+  margin-top: 240px;
+}
+
+#task-form,
+#category-form {
+  min-width: 100%;
+}
+.task-card {
+  width: 400px;
+  height: fit-content;
+  background-color: #fcf2c3;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+  padding: 10px;
+  color: #000000c2;
+}
+
+.task-title {
+  font-weight: 600;
+  font-size: 19px;
+  text-transform: capitalize;
+}
+
+.task-description {
+  font-weight: 400;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.strike-through {
+  text-decoration: line-through;
+}
+.done {
+  font-weight: 300;
+  color: gray;
+  font-size: 13px;
+}
+
+#done-tasks {
+  height: 20px;
+  width: 50px;
 }
 
 #close {
@@ -310,11 +334,6 @@ label {
 #close:hover,
 #close-task:hover {
   cursor: pointer;
-}
-
-#task-form,
-#category-form {
-  min-width: 100%;
 }
 
 .color-div,
@@ -420,4 +439,41 @@ label {
   right: 40px;
   bottom: 60px;
   z-index: 20;
+}
+
+/* media queries */
+
+@media screen and (max-width: 768px) {
+  #todo-details {
+    grid-template-columns: 1fr;
+  }
+
+  #todo-list {
+    overflow: auto;
+  }
+
+  #availiable-categories {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #add-categories-details {
+    width: fit-content;
+  }
+
+  #todo-img {
+    width: 200px;
+  }
+
+  #todo-items {
+    justify-content: center;
+  }
+
+  #open-cat {
+    align-self: center;
+  }
+}
+
+@media screen and (max-width: 580px) {
+  #todo-top {
+    flex-direction: column;
+  }
 }
