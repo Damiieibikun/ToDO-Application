@@ -131,7 +131,9 @@ form div {
 }
 
 /* homepage styles */
-
+#greeting-msg{
+  text-transform: capitalize;
+}
 .lg-txt,
 .success {
   font-family: "Playwrite MX", cursive;
@@ -234,6 +236,9 @@ form div {
   text-transform: capitalize;
 }
 
+.strike-through{
+  text-decoration: line-through;
+}
 .done {
   font-weight: 300;
   color: gray;

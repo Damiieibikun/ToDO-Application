@@ -114,6 +114,10 @@ $(document).ready(() => {
         fullName: $("#name").val(),
         userName: $("#username").val(),
         password: $("#password").val(),
+        todoInfo: {
+          categories:[],
+          todoTasks:[]
+        }
       });
 
       localStorage.setItem("todo-users", JSON.stringify(users));
