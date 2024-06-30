@@ -117,6 +117,8 @@ $(document).ready(() => {
       });
 
       localStorage.setItem("todo-users", JSON.stringify(users));
+      
+
       $("#signup-page").html(`<h1 class ='success'>Successful</h1>`);
       setTimeout(() => {
         $("#signup-page").slideUp(function () {
@@ -160,8 +162,9 @@ $(document).ready(() => {
         ) {
           validatedCredentials = true;
           $("#login-page").html(
-            `<h1 class='success'>Welcome ${$("#login-username").val()}</h1>`
+            `<h1 class='success'>Welcome ${element.fullName}</h1>`
           );
+          localStorage.setItem("current-user", element.fullName);
           setTimeout(() => {
             window.location.href = "home.html";
           }, 1000);

@@ -1,7 +1,9 @@
 $(document).ready(() => {
   // get request
   //populate page with categories already created
-
+let currentUser = localStorage.getItem("current-user")
+console.log(currentUser)
+$('#greeting-msg').text(`${currentUser}'s todos`)
   let todoCategories =
     JSON.parse(localStorage.getItem("todo-categories")) || [];
 
