@@ -106,7 +106,8 @@ $(document).ready(() => {
       //input validation for task form
       $("#add-new-task").click(function () {
         // remove all error classes on open
-        $("#add-tasks").show();
+        // $("#add-tasks").show();
+        $("#add-tasks").css('display', 'flex');
         $("#task-title").removeClass("wrong-format");
         $("#task-details").removeClass("wrong-format");
         $("#add-task-error").css("display", "none");
@@ -134,7 +135,8 @@ $(document).ready(() => {
 
       $("#open-cat").click(function () {
         // remove all error classes on open
-        $("#add-categories").show();
+        // $("#add-categories").show();
+        $("#add-categories").css('display', 'flex');
         $("#cat-error").css("display", "none");
         $("#category-input").removeClass("wrong-format");
       });
