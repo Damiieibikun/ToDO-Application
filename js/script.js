@@ -1,4 +1,5 @@
 $(document).ready(() => {
+  const url = "http://todo.reworkstaging.name.ng/v1";
   // transistion styles
   $("#signup").click(function () {
     $("#landingpage").slideUp();
@@ -110,27 +111,29 @@ $(document).ready(() => {
     console.log("final result is: " + result);
 
     if (result) {
-      let users = JSON.parse(localStorage.getItem("todo-users")) || [];
-      users.push({
-        fullName: $("#name").val(),
-        userName: $("#username").val(),
-        password: $("#password").val(),
-        todoInfo: {
-          categories: [],
-          todoTasks: [],
+      $.ajax({
+        url: `${url}/users`,
+        method: "POST",
+        data: {
+          name: $("#name").val(),
+          email: $("#email").val(),
+          password: $("#password").val(),
+        },
+        success: function (data) {
+          console.log(data);
+          $("#signup-page").html(
+            `<h1 class ='success' style="text-align: center;">Successful</h1>`
+          );
+          setTimeout(() => {
+            $("#signup-page").slideUp(function () {
+              $("#login-page").css("z-index", 1);
+            });
+          }, 1000);
+        },
+        error: function (error) {
+          console.log("error: " + error);
         },
       });
-
-      localStorage.setItem("todo-users", JSON.stringify(users));
-
-      $("#signup-page").html(
-        `<h1 class ='success' style="text-align: center;">Successful</h1>`
-      );
-      setTimeout(() => {
-        $("#signup-page").slideUp(function () {
-          $("#login-page").css("z-index", 1);
-        });
-      }, 1000);
     } else {
       console.log("Failed Registeration");
     }
@@ -157,28 +160,38 @@ $(document).ready(() => {
       $("#empty-field-login").hide();
       //get items from api and validate
 
-      let validatedCredentials = false; // change this later
-      let enteredUserName = $("#login-username").val();
+      let enteredEmail = $("#login-username").val();
       let enteredPassword = $("#login-password").val();
-      let users = JSON.parse(localStorage.getItem("todo-users")) || [];
-      users.forEach((element) => {
-        if (
-          element.userName === enteredUserName &&
-          element.password === enteredPassword
-        ) {
-          validatedCredentials = true;
-          $("#login-page").html(
-            `<h1 class='success' style="text-align: center;">Welcome ${element.fullName}</h1>`
-          );
-          localStorage.setItem("current-user", element.fullName);
-          setTimeout(() => {
-            window.location.href = "home.html";
-          }, 1000);
-        } else {
-          console.log("Failed Authentication");
-          $("#empty-field-login").show();
-          $("#empty-field-login").text("Invalid username or password");
-        }
+
+      $.ajax({
+        url: `${url}/users/login`,
+        method: "POST",
+        data: {
+          email: enteredEmail,
+          password: enteredPassword,
+        },
+        success: function (data) {
+          if (data.code === 404) {
+            $("#empty-field-login").show();
+            $("#empty-field-login").text(`${data.msg}`);
+          } else {
+            console.log("Success top");
+            console.log(data);
+            let userLogged = {
+              id: data.id,
+              name: data.name.split(" ")[0]
+            }
+            localStorage.setItem("logged-user", JSON.stringify(userLogged));
+            let currentUser = JSON.parse(localStorage.getItem("logged-user"));
+            $("#login-page").html(
+              `<h1 class='success' style="text-align: center;">Welcome ${currentUser.name}</h1>`
+            );
+
+            setTimeout(() => {
+              window.location.href = "home.html";
+            }, 1000);
+          }
+        },
       });
     } else {
       $("#empty-field-login").show();
