@@ -123,6 +123,67 @@
         </div>
       </div>
 
+      <div id="delete-categories" class="flex justify-center align-center">
+        <div
+          id="delete-categories-details"
+          class="flex-col align-center gap-20"
+        >
+          <span id="close-delete" class="flex align-center gap-10"
+            >Close
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-x-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+              /></svg
+          ></span>
+
+          <form
+            action=""
+            id="delete-category-form"
+            class="flex-col justify-center align-center gap-20"
+          >
+            <p>Are you sure you want to delete</p>
+            <p id="delete-tag"></p>
+            <button id="delete-category" type="submit">Delete Tag</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="delete-task" class="flex justify-center align-center">
+        <div id="delete-task-details" class="flex-col align-center gap-20">
+          <span id="close-delete-task" class="flex align-center gap-10"
+            >Close
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-x-lg"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+              /></svg
+          ></span>
+
+          <form
+            action=""
+            id="delete-task-form"
+            class="flex-col justify-center align-center gap-20"
+          >
+            <p>Are you sure you want to delete</p>
+            <p id="delete-task-title"></p>
+            <button id="delete-task-btn" type="submit">Delete Task</button>
+          </form>
+        </div>
+      </div>
+
       <div id="add-tasks" class="flex justify-center align-center">
         <div id="add-tasks-details" class="flex-col align-center gap-20">
           <form action="" id="task-form" class="flex-col justify-center gap-20">
@@ -163,10 +224,6 @@
               ></div>
             </div>
           </form>
-
-          <!-- <div id="chosen-colors" class="flex gap-20">
-           
-          </div> -->
         </div>
       </div>
       <div id="logout">

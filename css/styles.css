@@ -184,7 +184,7 @@ label {
 }
 
 #todo-details {
-  grid-template-columns: 250px 2fr;
+  grid-template-columns: 280px 2fr;
 }
 #add-new-task {
   display: none;
@@ -195,14 +195,18 @@ label {
   box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.146);
 }
 
+#category-input {
+  text-transform: capitalize;
+}
+
 #category-list {
   padding: 10px;
   overflow-y: auto;
   max-height: 35vh;
-
-  width: 185px;
+  gap: 10px;
+  width: 230px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(4, 1fr);
 
   grid-template-rows: auto;
   align-self: center;
@@ -250,7 +254,9 @@ label {
 }
 
 #add-categories,
-#add-tasks {
+#add-tasks,
+#delete-categories,
+#delete-task {
   display: none;
   position: fixed;
   z-index: 1;
@@ -262,7 +268,9 @@ label {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-#add-categories-details {
+#add-categories-details,
+#delete-categories-details,
+#delete-task-details {
   width: 40%;
 }
 
@@ -271,7 +279,9 @@ label {
 }
 
 #add-categories-details,
-#add-tasks-details {
+#add-tasks-details,
+#delete-categories-details,
+#delete-task-details {
   background-color: white;
   margin: auto;
   padding: 30px;
@@ -283,6 +293,10 @@ label {
   /* margin-top: 240px; */
 }
 
+#delete-tag,
+#delete-task-title {
+  font-weight: bold;
+}
 #task-form,
 #category-form {
   min-width: 100%;
@@ -325,14 +339,19 @@ label {
   height: 20px;
   width: 50px;
 }
-
 #close {
   margin-bottom: 50px;
+}
+#close,
+#close-delete,
+#close-delete-task {
   align-self: end;
 }
 
 #close:hover,
-#close-task:hover {
+#close-task:hover,
+#close-delete:hover,
+#close-delete-task:hover {
   cursor: pointer;
 }
 
@@ -393,7 +412,9 @@ label {
   gap: 5px;
 }
 
-.dropdown-edit-delete-icon:hover {
+.dropdown-edit-delete-icon:hover,
+.edit-tag-icon:hover,
+.delete-tag-icon:hover {
   cursor: pointer;
 }
 
@@ -403,11 +424,12 @@ label {
 
 .dropdown-edit-delete-list {
   position: absolute;
-  right: 0;
-  width: 65%;
+  /* width: 20%; */
   text-align: left;
   font-size: 13px;
   display: none;
+  z-index: 20;
+  right: 0;
 }
 
 .edit,
