@@ -153,6 +153,7 @@ label {
 /* homepage styles */
 #greeting-msg {
   text-transform: capitalize;
+  font-size: 30px;
 }
 .lg-txt,
 .success {
@@ -191,10 +192,15 @@ label {
 }
 
 #categories {
-  height: 85vh;
+  height: 88vh;
   box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.146);
+  justify-content: space-between;
 }
-
+#clear-filter{
+  width: 84px;
+  align-self: end;
+  display: none;
+}
 #category-input {
   text-transform: capitalize;
 }
@@ -236,8 +242,16 @@ label {
   text-transform: capitalize;
 }
 
-#todo-img {
-  width: 60%;
+/* #todo-img {
+  width: 45%;
+} */
+
+#todo-img{
+  background-image: url('../images/girl.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  height: 115px;
 }
 
 #open-cat {
@@ -249,8 +263,9 @@ label {
 #todo-items {
   padding: 0 30px;
   flex-wrap: wrap;
-  height: 85vh;
-  overflow-y: scroll;
+  height: fit-content;
+  max-height: 85vh;
+  overflow: auto;
 }
 
 #add-categories,
@@ -296,6 +311,7 @@ label {
 #delete-tag,
 #delete-task-title {
   font-weight: bold;
+  text-transform: capitalize;
 }
 #task-form,
 #category-form {

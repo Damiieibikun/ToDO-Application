@@ -108,8 +108,40 @@ $(document).ready(() => {
     }
     return newCard;
   }
+
+  function getTodos() {
+    $.ajax({
+      url: `${url}/tasks?user_id=${userId}`,
+      method: "GET",
+      success: function (data) {
+        // console.log(data);
+        console.log("Task data successfully retrieved");
+        data.forEach((task) => {
+          let colorCat = null;
+          $("#category-list")
+            .find(".category-name")
+            .each((i, cat) => {
+              if (cat.innerText.toLowerCase() === task.tag) {
+                colorCat = $(cat).prev().css("background-color");
+              }
+            });
+
+          let newCard = displayTodoCards(task, colorCat);
+          // append new card to page
+          $("#todo-items").append(newCard);
+        });
+      },
+      error: function (data) {
+        console.log("Error");
+        console.log("error: " + error);
+      },
+    });
+  }
   // get and display tags
   displayCat();
+
+  //populate page with tasks already created
+  getTodos();
 
   // create new tags and post
   $("#category-form").on("submit", function () {
@@ -152,8 +184,10 @@ $(document).ready(() => {
 
   $(document).on("click", ".delete-tag-icon", function () {
     let selectedTag = $(this).prev().prev().text();
+    let selectedColor = $(this).prev().prev().prev().css("background-color");
     $("#delete-categories").css("display", "flex");
     $("#delete-tag").text(selectedTag);
+    $("#delete-tag-color").css("background-color", selectedColor);
   });
 
   $("#close-delete-task").on("click", function () {
@@ -171,7 +205,7 @@ $(document).ready(() => {
       url: `${url}/tags?user_id=${userId}`,
       method: "GET",
       success: function (data) {
-        console.log(data);
+        // console.log(data);
         data.forEach((tag) => {
           if (tag.title === tagToDelete) {
             $.ajax({
@@ -251,7 +285,7 @@ $(document).ready(() => {
         },
         success: function (data) {
           console.log("Successfully posted tasks");
-          console.log(data);
+          // console.log(data);
           location.reload();
         },
         error: function (data) {
@@ -265,39 +299,17 @@ $(document).ready(() => {
     }
   });
 
-  //populate page with tasks already created
-  $.ajax({
-    url: `${url}/tasks?user_id=${userId}`,
-    method: "GET",
-    success: function (data) {
-      console.log(data);
-      console.log("Task data successfully retrieved");
-      let completedTask = null;
-      data.forEach((task) => {
-        let colorCat = null;
-        $("#category-list")
-          .find(".category-name")
-          .each((i, cat) => {
-            if (cat.innerText.toLowerCase() === task.tag) {
-              colorCat = $(cat).prev().css("background-color");
-            }
-          });
-
-        let newCard = displayTodoCards(task, colorCat);
-        // append new card to page
-        $("#todo-items").append(newCard);
-      });
-    },
-    error: function (data) {
-      console.log("Error");
-      console.log("error: " + error);
-    },
-  });
-
-  // filtering through categories may need api
+  // filtering through by categories
   $(document).on("click", ".color-div", function () {
-    $(this).next().toggleClass("font-weight");
-    $(this).next().siblings().toggleClass("opacity");
+    $("#clear-filter").css("display", "flex");
+    $(this).removeClass("opacity");
+    $(this).next().removeClass("opacity");
+    $(this).next().next().removeClass("opacity");
+    $(this).next().next().next().removeClass("opacity");
+
+    $(this).next().addClass("font-weight");
+    $(this).next().siblings().addClass("opacity");
+    $(this).next().siblings().removeClass("font-weight");
 
     let chosenID = $(this).data("id");
     let color = $(this).css("background-color");
@@ -305,7 +317,7 @@ $(document).ready(() => {
       url: `${url}/tags/tasks?tag_id=${chosenID}`,
       method: "GET",
       success: function (data) {
-        console.log(data);
+        // console.log(data);
         console.log("Data filtered successfully");
 
         $("#todo-items").empty();
@@ -322,13 +334,21 @@ $(document).ready(() => {
     });
   });
 
+  // clear applied filter
+  $("#clear-filter").click(function () {
+    $("#clear-filter").css("display", "none");
+    $("#category-list").children().removeClass("opacity");
+    $("#category-list").children().removeClass("font-weight");
+    $("#todo-items").empty();
+    getTodos();
+  });
+
   // edit and delete toggle buttons
   $(document).on("click", ".dropdown-edit-delete-icon", function () {
     $(this).next().toggle();
   });
 
   // delete a task
-
   $(document).on("click", ".delete", function () {
     let id = $(this).parent().parent().parent().data("id");
     let title = $(this).parent().parent().next().text();
@@ -345,7 +365,7 @@ $(document).ready(() => {
       method: "DELETE",
       success: function (data) {
         console.log("Task deleted successfully");
-        console.log(data);
+        // console.log(data);
         location.reload();
       },
       error: function (data) {
@@ -353,8 +373,6 @@ $(document).ready(() => {
       },
     });
   });
-
-  // mark as task as completed
 
   // striking through finished tasks
   $(document).on("click", ".check-task", function () {
@@ -380,7 +398,7 @@ $(document).ready(() => {
       },
       success: function (data) {
         console.log("Task updated successfully");
-        console.log(data);
+        // console.log(data);
       },
       error: function (data) {
         console.log(data);

@@ -46,34 +46,40 @@
       </div>
 
       <div id="todo-details" class="grid">
-        <div class="todo-details-items flex-col" id="categories">
-          <button class="flex align-center gap-10" id="open-cat">
-            Create Category
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-plus-lg"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-              />
-            </svg>
-          </button>
-
-          <div id="category-list" class="mt-30 mb-30 align-center"></div>
-
-          <div class="flex align-center justify-center">
-            <input type="checkbox" name="" id="done-tasks" />
-            <span style="font-weight: 300">Hide done tasks</span>
+        <div class="todo-details-items flex-col align-center" id="categories">
+          <div class="flex-col gap-10">
+            <button class="flex align-center gap-10" id="open-cat">
+              Create Category
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-plus-lg"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                />
+              </svg>
+            </button>
+            <button id="clear-filter">Clear filter</button>
+  
+            <div id="category-list" class="align-center"></div>
           </div>
+         
+<div>
+  <div class="flex align-center justify-center">
+    <input type="checkbox" name="" id="done-tasks" />
+    <span style="font-weight: 300">Hide done tasks</span>
+  </div>
 
-          <div class="flex align-center justify-center mt-30">
-            <img src="images/girl.jpg" alt="" id="todo-img" />
-          </div>
+  <div class="flex align-center justify-center mt-30" id="todo-img">
+    <!-- <img src="images/girl.jpg" alt="" id="todo-img" /> -->
+  </div>
+</div>
+         
         </div>
 
         <div class="todo-details-items flex gap-20" id="todo-items"></div>
@@ -149,7 +155,11 @@
             class="flex-col justify-center align-center gap-20"
           >
             <p>Are you sure you want to delete</p>
-            <p id="delete-tag"></p>
+            <div class="flex-col justify-center align-center">
+              <p id="delete-tag"></p>
+              <div class="color-div-sm" id="delete-tag-color"></div>
+            </div>
+           
             <button id="delete-category" type="submit">Delete Tag</button>
           </form>
         </div>
