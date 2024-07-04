@@ -6,33 +6,7 @@ $(document).ready(() => {
   $("#greeting-msg").text(`${currentUser.name}'s todos`);
   let userId = currentUser.id;
 
-  //open and close new categories
-  $("#close").on("click", function () {
-    $("#add-categories").hide();
-  });
-
-  $("#open-cat").click(function () {
-    // remove all error classes on open
-    $("#add-categories").css("display", "flex");
-    $("#cat-error").css("display", "none");
-    $("#category-input").removeClass("wrong-format");
-  });
-
-  // open and close new task
-  //input validation for task form
-  $("#add-new-task").click(function () {
-    // remove all error classes on open
-    $("#add-tasks").css("display", "flex");
-    $("#task-title").removeClass("wrong-format");
-    $("#task-details").removeClass("wrong-format");
-    $("#add-task-error").css("display", "none");
-    $(".chosen-color").removeClass("chosen-tag");
-  });
-
-  $("#close-task").on("click", function () {
-    $("#add-tasks").hide();
-  });
-
+  // functions
   function displayCat() {
     // function to display all categories
     $.ajax({
@@ -81,6 +55,8 @@ $(document).ready(() => {
     if (task.completed) {
       completedTask = "checked";
     }
+
+   
     let newCard = $(`<div class="task-card" data-id = ${task.id}>
       <div style="text-align: end;" class="dropdown-edit-delete">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots dropdown-edit-delete-icon" viewBox="0 0 16 16">
@@ -106,6 +82,14 @@ $(document).ready(() => {
       newCard.find(".task-title").addClass("strike-through");
       newCard.find(".task-description").addClass("strike-through");
     }
+
+    if(task.hidden){
+      newCard.addClass('display-none')
+      $("#done-tasks")[0].checked = true
+    }
+    else{
+      newCard.removeClass('display-none')
+    }
     return newCard;
   }
 
@@ -114,7 +98,7 @@ $(document).ready(() => {
       url: `${url}/tasks?user_id=${userId}`,
       method: "GET",
       success: function (data) {
-        // console.log(data);
+        console.log(data);
         console.log("Task data successfully retrieved");
         data.forEach((task) => {
           let colorCat = null;
@@ -137,14 +121,8 @@ $(document).ready(() => {
       },
     });
   }
-  // get and display tags
-  displayCat();
 
-  //populate page with tasks already created
-  getTodos();
-
-  // create new tags and post
-  $("#category-form").on("submit", function () {
+  function createCategories() {
     if ($("#category-input").val() === "") {
       $("#cat-error").css("display", "block");
       $("#category-input").addClass("wrong-format");
@@ -167,6 +145,7 @@ $(document).ready(() => {
         },
         success: function (data) {
           console.log("Successfully created a new Tag");
+          location.reload();
           // console.log(data)
         },
         error: function (error) {
@@ -178,10 +157,205 @@ $(document).ready(() => {
       // get and display tags
       displayCat();
     }
+  }
+
+  function editCategories(tagId) {
+    if ($("#category-input").val() === "") {
+      $("#cat-error").css("display", "block");
+      $("#category-input").addClass("wrong-format");
+    } else {
+      $("#cat-error").css("display", "none");
+      $("#category-input").removeClass("wrong-format");
+
+      let category = $("#category-input").val().toLowerCase();
+      let color = $("#color-picker").val();
+
+      $.ajax({
+        url: `${url}/tags/${tagId}`,
+        method: "PUT",
+        data: {
+          title: category,
+          color: color,
+        },
+        success: function (data) {
+          console.log("Successfully edited Tag");
+          location.reload();
+          // console.log(data)
+        },
+        error: function (error) {
+          console.log("Error");
+          console.log("error: " + error);
+        },
+      });
+    }
+  }
+
+  function createTask(tagId) {
+    if ($("#task-title").val() === "" && $("#task-details").val() === "") {
+      $("#task-title").addClass("wrong-format");
+      $("#task-details").addClass("wrong-format");
+      $("#add-task-error").text("Empty fields");
+      $("#add-task-error").css("display", "block");
+      e.preventDefault(); // prevent default when validating
+    } else if ($("#task-title").val() === "") {
+      $("#task-title").addClass("wrong-format");
+      $("#task-details").removeClass("wrong-format");
+      $("#add-task-error").text("Enter a title");
+      $("#add-task-error").css("display", "block");
+      e.preventDefault(); // prevent default when validating
+    } else if ($("#task-details").val() === "") {
+      $("#task-details").addClass("wrong-format");
+      $("#task-title").removeClass("wrong-format");
+      $("#add-task-error").text("Enter a Description");
+      $("#add-task-error").css("display", "block");
+      e.preventDefault(); // prevent default when validating
+    } else {
+      $("#task-title").removeClass("wrong-format");
+      $("#task-details").removeClass("wrong-format");
+
+      // get input value
+      let taskTitle = $("#task-title").val();
+      let taskDescription = $("#task-details").val();
+
+      // send info to api
+      $.ajax({
+        url: `${url}/tasks`,
+        method: "POST",
+        data: {
+          tag_id: tagId,
+          title: taskTitle,
+          content: taskDescription,
+        },
+        success: function (data) {
+          console.log("Successfully posted tasks");
+          // console.log(data);
+          location.reload();
+        },
+        error: function (data) {
+          console.log(data);
+        },
+      });
+
+      // clear all inputs and hide task form
+      $("#task-form")[0].reset();
+      $("#add-tasks").hide();
+    }
+  }
+
+  function editTask(taskId) {
+    if ($("#task-title").val() === "" && $("#task-details").val() === "") {
+      $("#task-title").addClass("wrong-format");
+      $("#task-details").addClass("wrong-format");
+      $("#add-task-error").text("Empty fields");
+      $("#add-task-error").css("display", "block");
+      e.preventDefault(); // prevent default when validating
+    } else if ($("#task-title").val() === "") {
+      $("#task-title").addClass("wrong-format");
+      $("#task-details").removeClass("wrong-format");
+      $("#add-task-error").text("Enter a title");
+      $("#add-task-error").css("display", "block");
+      e.preventDefault(); // prevent default when validating
+    } else if ($("#task-details").val() === "") {
+      $("#task-details").addClass("wrong-format");
+      $("#task-title").removeClass("wrong-format");
+      $("#add-task-error").text("Enter a Description");
+      $("#add-task-error").css("display", "block");
+      e.preventDefault(); // prevent default when validating
+    } else {
+      $("#task-title").removeClass("wrong-format");
+      $("#task-details").removeClass("wrong-format");
+
+      // get input value
+      let taskTitle = $("#task-title").val();
+      let taskDescription = $("#task-details").val();
+
+      // send info to api
+      $.ajax({
+        url: `${url}/tasks/${taskId}`,
+        method: "PUT",
+        data: {
+          title: taskTitle,
+          content: taskDescription,
+        },
+        success: function (data) {
+          console.log("Successfully Edited tasks");
+          // console.log(data);
+          location.reload();
+        },
+        error: function (data) {
+          console.log(data);
+        },
+      });
+
+      // clear all inputs and hide task form
+      $("#task-form")[0].reset();
+      $("#add-tasks").hide();
+    }
+  }
+  function deleteTask(taskId) {
+    $.ajax({
+      url: `${url}/tasks/${taskId}`,
+      method: "DELETE",
+      success: function (data) {
+        console.log("Task deleted successfully");
+        // console.log(data);
+        location.reload();
+      },
+      error: function (data) {
+        console.log(data);
+      },
+    });
+  }
+
+  // open and create a new category
+  $("#open-cat").click(function () {
+    // remove all error classes on open
+    $("#add-categories").css("display", "flex");
+    $("#cat-error").css("display", "none");
+    $("#category-input").removeClass("wrong-format");
+
+    $("#category-form").on("submit", function (e) {
+      // attach an event handler to category form
+      e.preventDefault();
+      createCategories();
+    });
   });
 
-  // open and close edit and delete task
+  //close categories
+  $("#close").on("click", function () {
+    $("#add-categories").hide();
+  });
 
+  // open and create a new task
+  $("#add-new-task").click(function () {
+    // remove all error classes on open
+    $("#add-tasks").css("display", "flex");
+    $("#list-of-tags").css({ display: "flex", "flex-direction": "column" });
+    $("#task-title").removeClass("wrong-format");
+    $("#task-details").removeClass("wrong-format");
+    $("#add-task-error").css("display", "none");
+    $(".chosen-color").removeClass("chosen-tag");
+
+    $("#task-form").on("submit", function (e) {
+      e.preventDefault();
+      // get id for tag
+      let tagId = $(this).find(".chosen-tag").data("id");
+      createTask(tagId);
+    });
+  });
+
+  // close tasks
+  $("#close-task").on("click", function () {
+    $("#add-tasks").hide();
+  });
+
+  // get and display tags
+  displayCat();
+
+  //populate page with tasks already created
+  getTodos();
+
+  // open delete task modal
   $(document).on("click", ".delete-tag-icon", function () {
     let selectedTag = $(this).prev().prev().text();
     let selectedColor = $(this).prev().prev().prev().css("background-color");
@@ -190,14 +364,37 @@ $(document).ready(() => {
     $("#delete-tag-color").css("background-color", selectedColor);
   });
 
+  // close delete task modal
   $("#close-delete-task").on("click", function () {
     $("#delete-task").hide();
   });
 
+  // close delete category modal
   $("#close-delete").on("click", function () {
     $("#delete-categories").hide();
   });
 
+  // edit a tag
+  $(document).on("click", ".edit-tag-icon", function () {
+    $("#add-categories").css("display", "flex");
+    let tagName = $(this).prev().text();
+    let colorTag = $(this).prev().prev().css("background-color");
+    let tagID = $(this).prev().prev().data("id");
+
+    $("#category-input").val(`${tagName}`);
+    $("#color-picker").val(`${$.Color(colorTag).toHexString()}`);
+
+    $("#cat-error").css("display", "none");
+    $("#category-input").removeClass("wrong-format");
+
+    // attach new event handler to category form
+    $("#category-form").on("submit", function (e) {
+      e.preventDefault();
+      editCategories(tagID);
+    });
+  });
+
+  // delete a tag
   $("#delete-category-form").on("submit", function (e) {
     e.preventDefault();
     let tagToDelete = $(this).find("#delete-tag").text();
@@ -231,7 +428,7 @@ $(document).ready(() => {
     $("#delete-categories").hide();
   });
 
-  // add class to chosen tag
+  // add class-style to chosen tag
   $(document).on("click", ".chosen-color", function () {
     $(".chosen-color").each((i, chosentag) => {
       if (chosentag === this) {
@@ -240,63 +437,6 @@ $(document).ready(() => {
         chosentag.classList.remove("chosen-tag");
       }
     });
-  });
-
-  // post a new todo card and reload
-  $("#task-form").on("submit", function (e) {
-    e.preventDefault();
-    if ($("#task-title").val() === "" && $("#task-details").val() === "") {
-      $("#task-title").addClass("wrong-format");
-      $("#task-details").addClass("wrong-format");
-      $("#add-task-error").text("Empty fields");
-      $("#add-task-error").css("display", "block");
-      e.preventDefault(); // prevent default when validating
-    } else if ($("#task-title").val() === "") {
-      $("#task-title").addClass("wrong-format");
-      $("#task-details").removeClass("wrong-format");
-      $("#add-task-error").text("Enter a title");
-      $("#add-task-error").css("display", "block");
-      e.preventDefault(); // prevent default when validating
-    } else if ($("#task-details").val() === "") {
-      $("#task-details").addClass("wrong-format");
-      $("#task-title").removeClass("wrong-format");
-      $("#add-task-error").text("Enter a Description");
-      $("#add-task-error").css("display", "block");
-      e.preventDefault(); // prevent default when validating
-    } else {
-      $("#task-title").removeClass("wrong-format");
-      $("#task-details").removeClass("wrong-format");
-
-      // get id for tag
-      let tagId = $(this).find(".chosen-tag").data("id");
-
-      // get input value
-      let taskTitle = $("#task-title").val();
-      let taskDescription = $("#task-details").val();
-
-      // send info to api
-      $.ajax({
-        url: `${url}/tasks`,
-        method: "POST",
-        data: {
-          tag_id: tagId,
-          title: taskTitle,
-          content: taskDescription,
-        },
-        success: function (data) {
-          console.log("Successfully posted tasks");
-          // console.log(data);
-          location.reload();
-        },
-        error: function (data) {
-          console.log(data);
-        },
-      });
-
-      // clear all inputs and hide task form
-      $("#task-form")[0].reset();
-      $("#add-tasks").hide();
-    }
   });
 
   // filtering through by categories
@@ -348,29 +488,32 @@ $(document).ready(() => {
     $(this).next().toggle();
   });
 
-  // delete a task
+  // edit a task
+  $(document).on("click", ".edit", function () {
+    $("#add-tasks").css("display", "flex");
+    $("#list-of-tags").css("display", "none");
+    let id = $(this).parent().parent().parent().data("id");
+    let title = $(this).parent().parent().next().text();
+    let content = $(this).parent().parent().next().next().text();
+
+    $("#task-title").val(`${title}`);
+    $("#task-details").val(`${content}`);
+    $("#task-form").on("submit", function (e) {
+      e.preventDefault();
+      // get id for task
+      editTask(id);
+    });
+  });
+
+  // delete a task modal
   $(document).on("click", ".delete", function () {
     let id = $(this).parent().parent().parent().data("id");
     let title = $(this).parent().parent().next().text();
     $("#delete-task-title").text(title);
     $("#delete-task").css("display", "flex");
-    localStorage.setItem("delete-task", id);
-  });
-
-  $("#delete-task-form").on("submit", function (e) {
-    e.preventDefault();
-    let id = localStorage.getItem("delete-task");
-    $.ajax({
-      url: `${url}/tasks/${id}`,
-      method: "DELETE",
-      success: function (data) {
-        console.log("Task deleted successfully");
-        // console.log(data);
-        location.reload();
-      },
-      error: function (data) {
-        console.log(data);
-      },
+    $("#delete-task-form").on("submit", function (e) {
+      e.preventDefault();
+      deleteTask(id);
     });
   });
 
@@ -406,273 +549,49 @@ $(document).ready(() => {
     });
   });
 
-  //populate page with categories already created
-  // let todoUsers = JSON.parse(localStorage.getItem("todo-users")) || [];
-  //   todoUsers.forEach((user) => {
-  //     if (user.fullName === currentUser) {
-  //       if (user.todoInfo.categories.length !== 0) {
-  //         $("#add-new-task").css("display", "flex");
-  //       } else {
-  //         $("#add-new-task").css("display", "none");
-  //       }
+  // hide all completed tasks
+  $(document).on("click", "#done-tasks", function () {
+    let status = $(this)[0].checked;
+    console.log(status)
 
-  //       user.todoInfo.categories.forEach((cat) => {
-  //         $("#category-list").append(`
+    for (var i of $(".task-card").find(".check-task")) {
+      if (i.checked) {
+        let taskId = $(i).closest(".task-card").data("id");
+        $.ajax({
+          url: `${url}/tasks/${taskId}/set-hidden`,
+          method: "PUT",
+          data: {
+            hidden: status,
+          },
+          success: function (data) {
+            console.log("Task hidden successfully");
+            location.reload()      
+          },
+          error: function (data) {
+            console.log(data);
+          },
+        });
+      }
+    }
 
-  //         <div class="color-div" style="background-color: ${cat.color};"></div>
+  });
 
-  //         <p class="category-name">${cat.category}</p>
-  //     `);
 
-  //         // add availiable categories to task form
-  //         $("#availiable-categories")
-  //           .append(`<div class="chosen-color flex align-center gap-10">
-  // <div class="color-div-md" style="background-color: ${cat.color};"></div>
-  // <p class="category-name-sm">${cat.category}</p>
-  // </div>`);
-  //       });
+//   $(document).click(function(e){
+//     // console.log(e.target.classList)
+// if(e.target.classList.contains('dropdown-edit-delete-icon') === false){
+//   $(e.target).next().addClass('display-none')
 
-  //       // from get request
-  //       //check if each dodo has been ticked as done
-  //       user.todoInfo.todoTasks.forEach((todo, i) => {
-  //         let checkedValue = null;
-  //         let applyStrikeThrough = false;
-  //         if (todo.done) {
-  //           checkedValue = "checked";
-  //           applyStrikeThrough = true;
-  //         }
-  //         // create a new card with a unique id number
-  //         let newCard = $(`<div class="task-card" data-id = ${i}>
-  //               <div style="text-align: end;" class="dropdown-edit-delete">
-  //                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots dropdown-edit-delete-icon" viewBox="0 0 16 16">
-  //   <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
-  //   </svg>
-  //   <div class="dropdown-edit-delete-list">
-  //                       <div class="edit">Edit..</div>
-  //                       <div class="delete">Delete..</div>
-  //                     </div>
-  //               </div>
-  //               <p class="task-title">${todo.title}</p>
-  //               <p class="task-description">${todo.description}</p>
-  //               <div style="text-align: end;">
-  //                   <input type="checkbox" name="" class="check-task" ${checkedValue}> <span class="done">Done</span>
-  //               </div>
-  //               <div class="flex gap-10 color-list-chosen">
-  //                   </div>
-  //           </div>
-  //       `);
+// }
+// else{
+//   $(e.target).next().removeClass('display-none')
+// }
+//   })
 
-  //         // append new card to page
-  //         $("#todo-items").append(newCard);
 
-  //         // add colors chosen to page
-  //         for (var i of todo.colors) {
-  //           newCard.find(".color-list-chosen").append(`
-  //                       <div class="color-div-md" style="background-color: ${i}"></div>`);
-  //         }
 
-  //         if (applyStrikeThrough) {
-  //           newCard.find(".task-title").addClass("strike-through");
-  //           newCard.find(".task-description").addClass("strike-through");
-  //         }
-  //       });
 
-  //       // creating new category
-  //       $("#category-form").on("submit", function () {
-  //         if ($("#category-input").val() === "") {
-  //           $("#cat-error").css("display", "block");
-  //           $("#category-input").addClass("wrong-format");
-  //         } else {
-  //           $("#cat-error").css("display", "none");
-  //           $("#category-input").removeClass("wrong-format");
-
-  //           let category = $("#category-input").val();
-  //           let color = $("#color-picker").val();
-
-  //           // display new task button once category has been created
-  //           $("#add-new-task").css("display", "flex");
-
-  //           $("#category-form")[0].reset();
-
-  //           // make post request to api?
-  //           user.todoInfo.categories.push({
-  //             category: category,
-  //             color: color,
-  //           });
-  //           // add to local storage/ make post request
-  //           localStorage.setItem("todo-users", JSON.stringify(todoUsers));
-  //         }
-  //       });
-
-  //       //input validation for task form
-  //       $("#add-new-task").click(function () {
-  //         // remove all error classes on open
-  //         // $("#add-tasks").show();
-  //         $("#add-tasks").css('display', 'flex');
-  //         $("#task-title").removeClass("wrong-format");
-  //         $("#task-details").removeClass("wrong-format");
-  //         $("#add-task-error").css("display", "none");
-  //         $(".chosen-color").removeClass("chosen-tag");
-  //       });
-
-  //       // filtering through categories may need api
-  //       $(document).on("click", ".color-div", function () {
-  //         $(this).next().toggleClass("font-weight");
-  //         let color = $(this).css("background-color");
-
-  //         // from get request
-  //         user.todoInfo.todoTasks.forEach((todo, i) => {
-  //           if (todo.colors.includes(color) === false) {
-  //             $(`[data-id=${i}]`).toggle();
-  //           }
-  //         });
-  //         $(this).next().siblings().toggleClass("opacity");
-  //       });
-
-  //       //open and close new categories and new tasks
-  //       $("#close").on("click", function () {
-  //         $("#add-categories").hide();
-  //       });
-
-  //       $("#open-cat").click(function () {
-  //         // remove all error classes on open
-  //         // $("#add-categories").show();
-  //         $("#add-categories").css('display', 'flex');
-  //         $("#cat-error").css("display", "none");
-  //         $("#category-input").removeClass("wrong-format");
-  //       });
-
-  //       $("#close-task").on("click", function () {
-  //         $("#add-tasks").hide();
-  //       });
-
-  //       // adding new todo card
-  //       $("#task-form").on("submit", function (e) {
-  //         if ($("#task-title").val() === "" && $("#task-details").val() === "") {
-  //           $("#task-title").addClass("wrong-format");
-  //           $("#task-details").addClass("wrong-format");
-  //           $("#add-task-error").text("Empty fields");
-  //           $("#add-task-error").css("display", "block");
-  //           e.preventDefault(); // prevent default when validating
-  //         } else if ($("#task-title").val() === "") {
-  //           $("#task-title").addClass("wrong-format");
-  //           $("#task-details").removeClass("wrong-format");
-  //           $("#add-task-error").text("Enter a title");
-  //           $("#add-task-error").css("display", "block");
-  //           e.preventDefault(); // prevent default when validating
-  //         } else if ($("#task-details").val() === "") {
-  //           $("#task-details").addClass("wrong-format");
-  //           $("#task-title").removeClass("wrong-format");
-  //           $("#add-task-error").text("Enter a Description");
-  //           $("#add-task-error").css("display", "block");
-  //           e.preventDefault(); // prevent default when validating
-  //         } else {
-  //           $("#task-title").removeClass("wrong-format");
-  //           $("#task-details").removeClass("wrong-format");
-
-  //           //get input value
-  //           let taskTitle = $("#task-title").val();
-  //           let taskDescription = $("#task-details").val();
-
-  //           // get colors chosen for categories and append to new card
-  //           let chosenColorsTask = [];
-  //           $("#task-form")
-  //             .find(".chosen-tag")
-  //             .find(".color-div-md")
-  //             .each((index, element) => {
-  //               let catColor = $(element).css("background-color");
-  //               chosenColorsTask.push(catColor);
-  //             });
-
-  //           // clear all inputs and hide task form
-  //           $("#task-form")[0].reset();
-  //           $("#add-tasks").hide();
-
-  //           // send info to api?
-  //           user.todoInfo.todoTasks.push({
-  //             title: taskTitle,
-  //             description: taskDescription,
-  //             colors: chosenColorsTask,
-  //             done: false,
-  //           });
-  //           // add to local storage//post to api
-  //           localStorage.setItem("todo-users", JSON.stringify(todoUsers));
-  //         }
-  //       });
-
-  //       // once category is selected assign class chosen-color
-  //       $(document).on("click", ".chosen-color", function () {
-  //         $(this).toggleClass("chosen-tag");
-  //       });
-
-  //       // edit and delete toggle buttons
-  //       $(document).on("click", ".dropdown-edit-delete-icon", function () {
-  //         $(this).next().toggle();
-  //       });
-
-  //       // delete item maybe a post request to remove item
-  //       $(document).on("click", ".delete", function () {
-  //         $(this).parent().parent().parent().hide();
-  //         let id = $(this).parent().parent().parent().data("id");
-  //         //make an api request here to remove item
-  //         user.todoInfo.todoTasks.splice(id, 1);
-  //         localStorage.setItem("todo-users", JSON.stringify(todoUsers));
-  //         location.reload(true);
-  //       });
-
-  //       // edit item maybe a post request to update item
-  //       $(document).on("click", ".edit", function () {
-  //         $(this).parent().hide();
-  //         $("#add-tasks").show();
-  //         $("#task-title").val(
-  //           $(this).parents(".dropdown-edit-delete").next().text()
-  //         );
-  //         $("#task-details").val(
-  //           $(this).parents(".dropdown-edit-delete").next().next().text()
-  //         );
-
-  //         // make an api request here to edit and update
-  //       });
-
-  //       // striking through finished tasks
-  //       $(document).on("click", ".check-task", function () {
-  //         // get id of card and apply styles to text
-  //         let id = $(this).closest(".task-card").data("id");
-
-  //         $(this)
-  //           .closest(".task-card")
-  //           .find(".task-title")
-  //           .toggleClass("strike-through");
-  //         $(this)
-  //           .closest(".task-card")
-  //           .find(".task-description")
-  //           .toggleClass("strike-through");
-  //         // make api post request
-  //         // find trageted and set todo-checked to true and update
-
-  //         user.todoInfo.todoTasks.forEach((todo, i) => {
-  //           if (i == id) {
-  //             if (this.checked) {
-  //               todo.done = true;
-  //             } else {
-  //               todo.done = false;
-  //             }
-  //           }
-  //         });
-  //         localStorage.setItem("todo-users", JSON.stringify(todoUsers));
-  //       });
-
-  //       // check for done tasks and hide the tags
-  //       $(document).on("click", "#done-tasks", function () {
-  //         for (var i of $(".task-card").find(".check-task")) {
-  //           if (i.checked) {
-  //             $(i).closest(".task-card").toggleClass("display-none");
-  //           }
-  //         }
-  //       });
-  //     }
-  //   });
-
+// log out from todo
   $("#logout-btn").click(() => {
     window.location.href = "index.html";
   });

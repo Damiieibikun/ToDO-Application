@@ -18,6 +18,8 @@
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-color/2.1.2/jquery.color.min.js"></script>
+
     <title>Todo-Home</title>
   </head>
 
@@ -75,8 +77,8 @@
     <span style="font-weight: 300">Hide done tasks</span>
   </div>
 
-  <div class="flex align-center justify-center mt-30" id="todo-img">
-    <!-- <img src="images/girl.jpg" alt="" id="todo-img" /> -->
+  <div class="flex align-center justify-center mt-20" id="todo-img">
+
   </div>
 </div>
          
@@ -85,6 +87,7 @@
         <div class="todo-details-items flex gap-20" id="todo-items"></div>
       </div>
 
+      <!-- add categories -->
       <div id="add-categories" class="flex justify-center align-center">
         <div id="add-categories-details" class="flex-col align-center gap-20">
           <span id="close" class="flex align-center gap-10"
@@ -129,6 +132,7 @@
         </div>
       </div>
 
+          <!-- delete categories -->
       <div id="delete-categories" class="flex justify-center align-center">
         <div
           id="delete-categories-details"
@@ -164,7 +168,7 @@
           </form>
         </div>
       </div>
-
+<!-- delete tasks -->
       <div id="delete-task" class="flex justify-center align-center">
         <div id="delete-task-details" class="flex-col align-center gap-20">
           <span id="close-delete-task" class="flex align-center gap-10"
@@ -193,7 +197,7 @@
           </form>
         </div>
       </div>
-
+<!-- add tasks -->
       <div id="add-tasks" class="flex justify-center align-center">
         <div id="add-tasks-details" class="flex-col align-center gap-20">
           <form action="" id="task-form" class="flex-col justify-center gap-20">
@@ -226,7 +230,7 @@
               ></textarea>
             </div>
 
-            <div>
+            <div id="list-of-tags">
               <p style="font-weight: bold; color: rgb(25, 25, 25)">Tags:</p>
               <div
                 id="availiable-categories"
@@ -236,6 +240,7 @@
           </form>
         </div>
       </div>
+      <!-- logout -->
       <div id="logout">
         <button id="logout-btn">LogOut</button>
       </div>

@@ -84,6 +84,10 @@ label {
 .mt-30 {
   margin-top: 30px;
 }
+
+.mt-20 {
+  margin-top: 20px;
+}
 .mb-30 {
   margin-bottom: 30px;
 }
@@ -192,7 +196,7 @@ label {
 }
 
 #categories {
-  height: 88vh;
+  height: 89vh;
   box-shadow: 2px 2px 2px rgba(128, 128, 128, 0.146);
   justify-content: space-between;
 }
@@ -208,7 +212,7 @@ label {
 #category-list {
   padding: 10px;
   overflow-y: auto;
-  max-height: 35vh;
+  max-height: 40vh;
   gap: 10px;
   width: 230px;
   display: grid;
@@ -230,7 +234,7 @@ label {
 }
 
 .category-name {
-  font-size: 17px;
+  font-size: 16px;
   color: rgba(0, 0, 0, 0.662);
   text-transform: capitalize;
 }
@@ -251,7 +255,7 @@ label {
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 115px;
+  height: 140px;
 }
 
 #open-cat {
@@ -446,6 +450,7 @@ label {
   display: none;
   z-index: 20;
   right: 0;
+
 }
 
 .edit,
@@ -480,6 +485,12 @@ label {
 }
 
 /* media queries */
+@media screen and (min-width: 1200px) {
+  #category-list {
+    max-height: 60vh;
+  }
+}
+
 
 @media screen and (max-width: 768px) {
   #todo-details {
