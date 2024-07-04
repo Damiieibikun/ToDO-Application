@@ -25,11 +25,12 @@
 
   <body>
     <section id="todo-list">
-      <div id="todo-top" class="flex align-center">
+      <div id="todo-top" class="flex align-center mb-30">
         <h1 class="lg-txt" id="greeting-msg"></h1>
+
         <div class="flex align-center gap-10" id="add-new-task">
-          <button class="flex align-center gap-10" , style="font-weight: 600">
-            Create Task
+          <button class="flex align-center gap-10" style="font-weight: 600">
+           
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -45,11 +46,18 @@
             </svg>
           </button>
         </div>
+
       </div>
 
       <div id="todo-details" class="grid">
+        <button id="category-menu" class="flex align-center gap-10 mb-30"> Menu
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-app" viewBox="0 0 16 16">
+            <path d="M0 1.5A1.5 1.5 0 0 1 1.5 0h2A1.5 1.5 0 0 1 5 1.5v2A1.5 1.5 0 0 1 3.5 5h-2A1.5 1.5 0 0 1 0 3.5zM1.5 1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 .5.5h2a.5.5 0 0 0 .5-.5v-2a.5.5 0 0 0-.5-.5zM0 8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm1 3v2a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2zm14-1V8a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v2zM2 8.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0 4a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5"/>
+          </svg>
+        </button>
         <div class="todo-details-items flex-col align-center" id="categories">
           <div class="flex-col gap-10">
+           
             <button class="flex align-center gap-10" id="open-cat">
               Create Category
               <svg
@@ -72,7 +80,7 @@
           </div>
          
 <div>
-  <div class="flex align-center justify-center">
+  <div class="flex align-center justify-center mb-30">
     <input type="checkbox" name="" id="done-tasks" />
     <span style="font-weight: 300">Hide done tasks</span>
   </div>
@@ -191,9 +199,13 @@
             id="delete-task-form"
             class="flex-col justify-center align-center gap-20"
           >
+
+          <div id="delete-task-details-info">
             <p>Are you sure you want to delete</p>
             <p id="delete-task-title"></p>
             <button id="delete-task-btn" type="submit">Delete Task</button>
+          </div>
+
           </form>
         </div>
       </div>

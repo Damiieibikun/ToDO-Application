@@ -175,8 +175,7 @@ $(document).ready(() => {
             $("#empty-field-login").show();
             $("#empty-field-login").text(`${data.msg}`);
           } else {
-            console.log("Success top");
-            console.log(data);
+            console.log("Login Successful");
             let userLogged = {
               id: data.id,
               name: data.name.split(" ")[0]

@@ -246,9 +246,9 @@ label {
   text-transform: capitalize;
 }
 
-/* #todo-img {
-  width: 45%;
-} */
+#category-menu{
+  display: none;
+}
 
 #todo-img{
   background-image: url('../images/girl.jpg');
@@ -293,6 +293,10 @@ label {
   width: 40%;
 }
 
+#add-new-task button:before {
+  content: "Create Task";
+}
+
 #add-tasks-details {
   width: fit-content;
 }
@@ -316,6 +320,15 @@ label {
 #delete-task-title {
   font-weight: bold;
   text-transform: capitalize;
+}
+
+#error-delete-cat .mb-30{
+  font-weight:  bold;
+  color: red;
+}
+#error-delete-cat{
+
+  text-align: center;
 }
 #task-form,
 #category-form {
@@ -493,6 +506,12 @@ label {
 
 
 @media screen and (max-width: 768px) {
+  #greeting-msg{
+    text-align: center;
+  }
+  #todo-top{
+    margin-bottom: 30px;
+  }
   #todo-details {
     grid-template-columns: 1fr;
   }
@@ -500,7 +519,17 @@ label {
   #todo-list {
     overflow: auto;
   }
+#categories{
+  margin: 20px 0;
+  height: fit-content;
+  display: none;
 
+}
+
+#category-menu{
+  display: flex;
+  justify-self: center;
+}
   #availiable-categories {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -509,11 +538,12 @@ label {
   }
 
   #todo-img {
-    width: 200px;
+    display: none;
   }
 
   #todo-items {
     justify-content: center;
+    padding: 20px;
   }
 
   #open-cat {
@@ -522,7 +552,11 @@ label {
 }
 
 @media screen and (max-width: 580px) {
-  #todo-top {
-    flex-direction: column;
+  #add-new-task button:before {
+    content: "";
+  }
+
+  #add-new-task button {
+    gap: 0;
   }
 }

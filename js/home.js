@@ -56,7 +56,6 @@ $(document).ready(() => {
       completedTask = "checked";
     }
 
-   
     let newCard = $(`<div class="task-card" data-id = ${task.id}>
       <div style="text-align: end;" class="dropdown-edit-delete">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots dropdown-edit-delete-icon" viewBox="0 0 16 16">
@@ -83,12 +82,11 @@ $(document).ready(() => {
       newCard.find(".task-description").addClass("strike-through");
     }
 
-    if(task.hidden){
-      newCard.addClass('display-none')
-      $("#done-tasks")[0].checked = true
-    }
-    else{
-      newCard.removeClass('display-none')
+    if (task.hidden) {
+      newCard.addClass("display-none");
+      $("#done-tasks")[0].checked = true;
+    } else {
+      newCard.removeClass("display-none");
     }
     return newCard;
   }
@@ -98,7 +96,7 @@ $(document).ready(() => {
       url: `${url}/tasks?user_id=${userId}`,
       method: "GET",
       success: function (data) {
-        console.log(data);
+        // console.log(data);
         console.log("Task data successfully retrieved");
         data.forEach((task) => {
           let colorCat = null;
@@ -355,13 +353,36 @@ $(document).ready(() => {
   //populate page with tasks already created
   getTodos();
 
-  // open delete task modal
+  // open delete tag modal
   $(document).on("click", ".delete-tag-icon", function () {
+    let chosenID = $(this).prev().prev().prev().data("id");
     let selectedTag = $(this).prev().prev().text();
     let selectedColor = $(this).prev().prev().prev().css("background-color");
-    $("#delete-categories").css("display", "flex");
-    $("#delete-tag").text(selectedTag);
-    $("#delete-tag-color").css("background-color", selectedColor);
+    $.ajax({
+      url: `${url}/tags/tasks?tag_id=${chosenID}`,
+      method: "GET",
+      success: function (data) {
+        // console.log(data);
+        if (data.length > 0) {
+          $("#delete-task").css("display", "flex");
+          $("#delete-task-details-info").html(`
+            <div id="error-delete-cat">
+            <p class = "mb-30">Error</p>
+            <p>Unable to delete <span id="delete-task-title">${selectedTag}.</span></p>
+            <p>Please remove tasks already assigned to this tag.</p>
+            </div>
+            
+            `);
+        } else {
+          $("#delete-categories").css("display", "flex");
+          $("#delete-tag").text(selectedTag);
+          $("#delete-tag-color").css("background-color", selectedColor);
+        }
+      },
+      error: function (data) {
+        console.log(data);
+      },
+    });
   });
 
   // close delete task modal
@@ -457,7 +478,7 @@ $(document).ready(() => {
       url: `${url}/tags/tasks?tag_id=${chosenID}`,
       method: "GET",
       success: function (data) {
-        // console.log(data);
+        console.log(data);
         console.log("Data filtered successfully");
 
         $("#todo-items").empty();
@@ -552,7 +573,7 @@ $(document).ready(() => {
   // hide all completed tasks
   $(document).on("click", "#done-tasks", function () {
     let status = $(this)[0].checked;
-    console.log(status)
+    console.log(status);
 
     for (var i of $(".task-card").find(".check-task")) {
       if (i.checked) {
@@ -565,7 +586,7 @@ $(document).ready(() => {
           },
           success: function (data) {
             console.log("Task hidden successfully");
-            location.reload()      
+            location.reload();
           },
           error: function (data) {
             console.log(data);
@@ -573,25 +594,26 @@ $(document).ready(() => {
         });
       }
     }
-
   });
 
+  //   $(document).click(function(e){
+  //     // console.log(e.target.classList)
+  // if(e.target.classList.contains('dropdown-edit-delete-icon') === false){
+  //   $(e.target).next().addClass('display-none')
 
-//   $(document).click(function(e){
-//     // console.log(e.target.classList)
-// if(e.target.classList.contains('dropdown-edit-delete-icon') === false){
-//   $(e.target).next().addClass('display-none')
+  // }
+  // else{
+  //   $(e.target).next().removeClass('display-none')
+  // }
+  //   })
 
-// }
-// else{
-//   $(e.target).next().removeClass('display-none')
-// }
-//   })
-
-
+  // dropdown menu for responsiveness
+  $('#category-menu').click(function () {
+    $('#categories').toggle('slow')
+})
 
 
-// log out from todo
+  // log out from todo
   $("#logout-btn").click(() => {
     window.location.href = "index.html";
   });
