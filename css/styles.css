@@ -113,6 +113,7 @@ label {
     rgba(250, 235, 215, 1) 35%,
     rgba(255, 255, 255, 1) 100%
   );
+  gap: 150px;
 }
 
 #signup,
@@ -141,6 +142,11 @@ label {
     rgba(251, 249, 247, 1) 35%,
     rgba(255, 255, 255, 1) 100%
   );
+}
+
+#signup-page{
+
+  gap: 150px;
 }
 
 .error-msg {
@@ -251,10 +257,10 @@ label {
 }
 
 #todo-img{
-  background-image: url('../images/girl.jpg');
+  background-image: url('../images/todo.png');
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   height: 140px;
 }
 
@@ -471,7 +477,7 @@ label {
   background-color: white;
   border-radius: 3px;
   padding: 10px 10px 10px 20px;
-  color: rgba(128, 128, 128, 0.735);
+  color: rgb(51 50 50 / 74%);
 }
 .edit:hover,
 .delete:hover {
@@ -498,7 +504,7 @@ label {
 }
 
 /* media queries */
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1400px) {
   #category-list {
     max-height: 60vh;
   }
@@ -506,6 +512,19 @@ label {
 
 
 @media screen and (max-width: 768px) {
+#registration-form{
+  padding: 10px;
+  width: 100%;
+}
+  .lg-txt{
+    font-size: 26px;
+  }
+#landingpage img{
+  display: none;
+}
+  #signup-page img{
+    display: none;
+  }
   #greeting-msg{
     text-align: center;
   }

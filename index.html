@@ -14,6 +14,7 @@
     <section id="todo-index">
 
         <div id="landingpage" class="flex justify-center align-center">
+            <img src="images/girl3.png" alt="" width="20%">
             <div>
                 <h1 class="lg-txt" id="todoindex-text">ToDo</h1>
                 <button id="signup">Sign Up</button>
@@ -22,45 +23,50 @@
 
         </div>
 
-        <div id="signup-page" class="flex-col justify-center align-center">
-            <h2 class="lg-txt mb-30" style="text-align: center;">Register Details</h2>
-            <form action="" class="flex-col justify-center align-center gap-20" id="registration-form">
-
-                <span class="error-msg" id="empty-field">Empty Field</span>
-
-                <input type="text" placeholder="Name" id="name" class="right-format">
-                <div class="flex-col justify-center align-center">
-                    <span class="error-msg">Wrong Email Format</span>
-                    <input type="text" placeholder="Email" id="email" class="right-format">
-                </div>
-
-
-                <input type="text" placeholder="Username" id="username" class="right-format">
-                <div class="flex-col justify-center align-center">
-                    <span class="error-msg">Password must be at least 8 characters and contain letters and numbers</span>
-                    <input type="text" placeholder="Password" id="password" class="right-format">
-                </div>
-
-                <div class="flex-col justify-center align-center">
-                    <span class="error-msg">Incorrect Password</span>
-                    <input type="text" placeholder="Confirm Password" id="confirm-password" class="right-format">
-                </div>
-
-
-                <span class="small-text">Already Registered? <a href="#" id="login-link">Login</a></span>
-
-                <button type="submit" id="register">Register</button>
-
-            </form>
+        <div id="signup-page" class="flex justify-center align-center">
+            <img src="images/regtodo.png" alt="" width="20%">
+            <div class="flex-col justify-center align-center">
+                <h2 class="lg-txt" style="text-align: center; margin-bottom: 20px;">Register Details</h2>
+            
+                <form action="" class="flex-col justify-center align-center gap-20" id="registration-form">
+    
+                    <span class="error-msg" id="empty-field">Empty Field</span>
+    
+                    <input type="text" placeholder="Name" id="name" class="right-format">
+                    <div class="flex-col justify-center align-center">
+                        <span class="error-msg">Wrong Email Format</span>
+                        <input type="text" placeholder="Email" id="email" class="right-format">
+                    </div>
+    
+    
+                    <input type="text" placeholder="Username" id="username" class="right-format">
+                    <div class="flex-col justify-center align-center">
+                        <span class="error-msg">Password must be at least 8 characters and contain letters and numbers</span>
+                        <input type="text" placeholder="Password" id="password" class="right-format">
+                    </div>
+    
+                    <div class="flex-col justify-center align-center">
+                        <span class="error-msg">Incorrect Password</span>
+                        <input type="text" placeholder="Confirm Password" id="confirm-password" class="right-format">
+                    </div>
+    
+    
+                    <span class="small-text">Already Registered? <a href="#" id="login-link">Login</a></span>
+    
+                    <button type="submit" id="register">Register</button>
+    
+                </form>
+            </div>
+            
 
         </div>
 
         <div id="login-page" class="flex-col justify-center align-center">
-
-            <h2 class="lg-txt mb-30">Login</h2>
+            <img src="images/todo1.png" alt="" width="15%">
+            <h2 class="lg-txt" style="margin-bottom: 30px;">Login</h2>
             <form action="" class="flex-col justify-center align-center gap-10" id="login-form">
                 <span class="error-msg" id="empty-field-login">Empty Field</span>
-                <input type="text" placeholder="email" class="right-format" id="login-username">
+                <input type="text" placeholder="Email" class="right-format" id="login-username">
                 <input type="text" placeholder="Password" class="right-format" id="login-password">
 
                 <span class="small-text">Not Registered? <a href="#" id="signup-link">Sign Up</a></span>
