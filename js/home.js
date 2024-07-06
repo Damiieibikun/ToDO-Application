@@ -62,6 +62,16 @@ $(document).ready(() => {
       success: function (data) {
         // console.log(data);
         console.log("Task data successfully retrieved");
+
+        // remove welcome illustration and applied styles
+        if (data.length !== 0) {
+          $("#getstarted").css("display", "none");
+          $("#todo-items").removeClass("justify-center");
+          $("#todo-items").css("height", "fit-content");
+        } else {
+          $("#getstarted").css("display", "flex");
+        }
+
         data.forEach((task) => {
           let colorCat = null;
           $("#category-list")
