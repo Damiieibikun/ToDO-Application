@@ -17,10 +17,14 @@ $(document).ready(() => {
         data.forEach((cat) => {
           $("#category-list").append(`
        
-          <div class="color-div" data-id=${cat.id} style="background-color: ${cat.color};"></div>
+          <div class="color-div opacity7" data-id=${cat.id} style="background-color: ${cat.color};"></div>
        
           <p class="category-name">${cat.title}</p>
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square edit-tag-icon" viewBox="0 0 16 16">
+          <div class="edit-delete-cat">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list edit-delete-tag-menu-icon" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+</svg>
+           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square edit-tag-icon" viewBox="0 0 16 16">
     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
     <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
   </svg>
@@ -28,6 +32,8 @@ $(document).ready(() => {
   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x delete-tag-icon" viewBox="0 0 16 16">
     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
   </svg>
+          </div>
+ 
       `);
 
           // add availiable categories to task form
@@ -61,7 +67,7 @@ $(document).ready(() => {
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots dropdown-edit-delete-icon" viewBox="0 0 16 16">
 <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
 </svg>
-<div class="dropdown-edit-delete-list">
+<div class="dropdown-edit-delete-list display-none">
               <div class="edit">Edit..</div>
               <div class="delete">Delete..</div>
             </div>
@@ -72,7 +78,7 @@ $(document).ready(() => {
           <input type="checkbox" name="" class="check-task" ${completedTask}> <span class="done">Done</span>
       </div>
       <div class="flex gap-10 color-list-chosen">
-      <div class="color-div-md" style="background-color: ${color}"></div>
+      <div class="color-div-md opacity7" style="background-color: ${color}"></div>
           </div>
   </div>
 `);
@@ -355,9 +361,11 @@ $(document).ready(() => {
 
   // open delete tag modal
   $(document).on("click", ".delete-tag-icon", function () {
-    let chosenID = $(this).prev().prev().prev().data("id");
-    let selectedTag = $(this).prev().prev().text();
-    let selectedColor = $(this).prev().prev().prev().css("background-color");
+    $(this).css('display', 'none')
+    $(this).prev().css('display', 'none')
+    let chosenID = $(this).parent().prev().prev().data("id");
+    let selectedTag = $(this).parent().prev().text();
+    let selectedColor = $(this).parent().prev().prev().css("background-color");
     $.ajax({
       url: `${url}/tags/tasks?tag_id=${chosenID}`,
       method: "GET",
@@ -395,15 +403,26 @@ $(document).ready(() => {
     $("#delete-categories").hide();
   });
 
+  // show edit and delete tag options
+$(document).on('click', '.edit-delete-tag-menu-icon', function () {
+  $(this).siblings().toggle('fast')
+})
+
+
   // edit a tag
   $(document).on("click", ".edit-tag-icon", function () {
     $("#add-categories").css("display", "flex");
-    let tagName = $(this).prev().text();
-    let colorTag = $(this).prev().prev().css("background-color");
-    let tagID = $(this).prev().prev().data("id");
+    $(this).css('display', 'none')
+    $(this).next().css('display', 'none')
+    
+    let tagName = $(this).parent().prev().text();
+    let colorTag = $(this).parent().prev().prev().css("background-color");
+    let tagID = $(this).parent().prev().prev().data("id");
 
     $("#category-input").val(`${tagName}`);
     $("#color-picker").val(`${$.Color(colorTag).toHexString()}`);
+    $('#category-form label').text('Edit Category')
+    $('#add-category').text('Edit');
 
     $("#cat-error").css("display", "none");
     $("#category-input").removeClass("wrong-format");
@@ -463,14 +482,16 @@ $(document).ready(() => {
   // filtering through by categories
   $(document).on("click", ".color-div", function () {
     $("#clear-filter").css("display", "flex");
-    $(this).removeClass("opacity");
-    $(this).next().removeClass("opacity");
-    $(this).next().next().removeClass("opacity");
-    $(this).next().next().next().removeClass("opacity");
-
     $(this).next().addClass("font-weight");
-    $(this).next().siblings().addClass("opacity");
     $(this).next().siblings().removeClass("font-weight");
+    $(this).removeClass("opacity7");
+    $(this).removeClass("opacity5");
+    $(this).next().removeClass("opacity5");
+    $(this).next().next().removeClass("opacity5");
+
+    $(this).next().next().nextAll().addClass("opacity5");
+    $(this).prevAll().addClass("opacity5");
+    
 
     let chosenID = $(this).data("id");
     let color = $(this).css("background-color");
@@ -498,16 +519,25 @@ $(document).ready(() => {
   // clear applied filter
   $("#clear-filter").click(function () {
     $("#clear-filter").css("display", "none");
-    $("#category-list").children().removeClass("opacity");
+    $("#category-list").children().removeClass("opacity5");
+    $(".color-div").addClass("opacity7");
     $("#category-list").children().removeClass("font-weight");
     $("#todo-items").empty();
     getTodos();
   });
 
   // edit and delete toggle buttons
-  $(document).on("click", ".dropdown-edit-delete-icon", function () {
-    $(this).next().toggle();
+  $(document).on("click", ".dropdown-edit-delete-icon", function (e) {
+    $(this).next().toggleClass('display-none');   
   });
+
+  // remove edit and delete task button once document is clicked
+  $(document).click(function(e){
+    if(e.target.classList.contains('dropdown-edit-delete-icon') === false){
+      $('.dropdown-edit-delete-list').addClass('display-none');
+    }
+  })
+
 
   // edit a task
   $(document).on("click", ".edit", function () {
@@ -519,6 +549,7 @@ $(document).ready(() => {
 
     $("#task-title").val(`${title}`);
     $("#task-details").val(`${content}`);
+    $('#add-task').text('Edit Task')
     $("#task-form").on("submit", function (e) {
       e.preventDefault();
       // get id for task
@@ -596,22 +627,11 @@ $(document).ready(() => {
     }
   });
 
-  //   $(document).click(function(e){
-  //     // console.log(e.target.classList)
-  // if(e.target.classList.contains('dropdown-edit-delete-icon') === false){
-  //   $(e.target).next().addClass('display-none')
-
-  // }
-  // else{
-  //   $(e.target).next().removeClass('display-none')
-  // }
-  //   })
 
   // dropdown menu for responsiveness
   $('#category-menu').click(function () {
     $('#categories').toggle('slow')
 })
-
 
   // log out from todo
   $("#logout-btn").click(() => {

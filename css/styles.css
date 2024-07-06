@@ -222,16 +222,19 @@ label {
   gap: 10px;
   width: 230px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
   grid-template-rows: auto;
   align-self: center;
 }
 
-.opacity {
+.opacity5 {
   opacity: 0.5;
 }
 
+.opacity7 {
+  opacity: 0.7;
+}
 .font-weight {
   font-weight: 700;
 }
@@ -367,6 +370,7 @@ label {
 
 .strike-through {
   text-decoration: line-through;
+  color: #00000070;
 }
 .done {
   font-weight: 300;
@@ -411,6 +415,7 @@ label {
 
 .color-div:hover {
   cursor: pointer;
+  opacity: 1;
 }
 .color-div-md {
   height: 35px;
@@ -453,9 +458,16 @@ label {
 
 .dropdown-edit-delete-icon:hover,
 .edit-tag-icon:hover,
-.delete-tag-icon:hover {
+.delete-tag-icon:hover,
+.edit-delete-tag-menu-icon:hover {
   cursor: pointer;
 }
+
+.edit-tag-icon,
+.delete-tag-icon{
+  display: none;
+}
+
 
 .dropdown-edit-delete {
   position: relative;
@@ -466,7 +478,6 @@ label {
   /* width: 20%; */
   text-align: left;
   font-size: 13px;
-  display: none;
   z-index: 20;
   right: 0;
 
