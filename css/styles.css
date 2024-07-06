@@ -303,7 +303,7 @@ label {
 #add-categories-details,
 #delete-categories-details,
 #delete-task-details {
-  min-width: 300px;
+  min-width: 240px;
   width: 40%;
 }
 
@@ -321,7 +321,7 @@ label {
 }
 
 #add-tasks-details{
-  min-width: 300px;
+  min-width: 240px;
 }
 
 #add-categories-details,
