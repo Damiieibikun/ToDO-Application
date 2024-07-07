@@ -224,10 +224,9 @@ label {
   overflow-y: auto;
   max-height: 40vh;
   gap: 10px;
-  width: 230px;
+  width: 245px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-
   grid-template-rows: auto;
   align-self: center;
 }
