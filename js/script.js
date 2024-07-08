@@ -39,6 +39,22 @@ $(document).ready(() => {
     return emailValidated;
   }
 
+  function validateLoginEmail() {
+    let emailValidated = false;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if ($("#login-username").val() !== "") {
+      emailRegex.test($("#login-username").val())
+        ? ($("#login-username").removeClass("wrong-format"),
+          $("#login-username").prev().hide(),
+          (emailValidated = true))
+        : ($("#login-username").addClass("wrong-format"), 
+        $("#login-username").prev().show())
+      
+    }
+
+    return emailValidated;
+  }
+
   function validatePassword() {
     let passwordValidated = false;
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
@@ -206,5 +222,6 @@ $(document).ready(() => {
 
   $("#login-form").on("submit", validateLogin);
   $("#login-username").on("change", validateEmpty);
+  $("#login-username").on("change", validateLoginEmail);
   $("#login-password").on("change", validateEmpty);
 });
