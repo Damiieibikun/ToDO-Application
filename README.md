@@ -71,4 +71,5 @@ This project is a simple Todo Application where users can register, log in, and 
 
 
 This project is part of a series of assessments given to me by my traning academy.
+NB: API endpoints prefixes start with http:// see [Todo Application -LocalStorge](https://github.com/Damiieibikun/Todo-Application-Local-Storage.) for local storage version
 
